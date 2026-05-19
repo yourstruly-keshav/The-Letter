@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>A Letter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --sky: #ddeeff;
+      --mist: #e8eaf6;
+      --lavender: #c5cae9;
+      --lavender-deep: #9fa8da;
+      --blue-soft: #b3d4f5;
+      --blue-mid: #90b8e8;
+      --text: #3a3a5c;
+      --text-light: #7880a8;
+      --ink: #2c2c4a;
+      --paper: #f4f6ff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: var(--sky);
+      background-image:
+        radial-gradient(ellipse at 10% 20%, #d6e8ff 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 75%, #ddd6f3 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 50%, #e8f0ff 0%, transparent 80%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Floating paper flecks */
+    .fleck {
+      position: fixed;
+      border-radius: 50%;
+      opacity: 0.18;
+      pointer-events: none;
+      animation: drift linear infinite;
+    }
+    .fleck:nth-child(1)  { width:6px;  height:6px;  background:var(--lavender-deep); top:10%; left:8%;  animation-duration:18s; animation-delay:0s; }
+    .fleck:nth-child(2)  { width:4px;  height:4px;  background:var(--blue-mid);       top:30%; left:92%; animation-duration:22s; animation-delay:-5s; }
+    .fleck:nth-child(3)  { width:8px;  height:8px;  background:var(--lavender);       top:70%; left:5%;  animation-duration:25s; animation-delay:-10s; }
+    .fleck:nth-child(4)  { width:5px;  height:5px;  background:var(--blue-soft);      top:80%; left:88%; animation-duration:20s; animation-delay:-3s; }
+    .fleck:nth-child(5)  { width:3px;  height:3px;  background:var(--lavender-deep);  top:50%; left:50%; animation-duration:30s; animation-delay:-8s; }
+
+    @keyframes drift {
+      0%   { transform: translateY(0px) rotate(0deg); opacity:0.18; }
+      50%  { opacity: 0.28; }
+      100% { transform: translateY(-60px) rotate(180deg); opacity:0.18; }
+    }
+
+    .envelope-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 680px;
+      animation: unfold 0.9s cubic-bezier(0.22,1,0.36,1) both;
+    }
+
+    @keyframes unfold {
+      from { opacity:0; transform: translateY(28px) scale(0.97); }
+      to   { opacity:1; transform: translateY(0) scale(1); }
+    }
+
+    /* Top label strip */
+    .label-strip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding-left: 4px;
+      opacity: 0;
+      animation: fadein 0.7s 0.5s ease forwards;
+    }
+    @keyframes fadein { to { opacity:1; } }
+
+    .label-strip .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--lavender-deep);
+    }
+    .label-strip span {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      font-weight: 400;
+    }
+
+    /* Paper card */
+    .card {
+      background: var(--paper);
+      border-radius: 4px 4px 4px 4px;
+      box-shadow:
+        0 2px 0 0 var(--lavender),
+        0 12px 40px rgba(120,130,200,0.18),
+        0 2px 8px rgba(100,120,200,0.10);
+      position: relative;
+      overflow: hidden;
+      padding: 56px 60px 52px 60px;
+    }
+
+    /* Ruled lines subtle texture */
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 31px,
+        rgba(180,190,230,0.13) 32px
+      );
+      pointer-events: none;
+    }
+
+    
+    /* Torn top edge effect */
+    .torn-top {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 6px;
+      background: linear-gradient(to right, var(--blue-soft), var(--lavender), var(--blue-soft));
+      opacity: 0.6;
+    }
+
+    /* Corner fold */
+    .corner-fold {
+      position: absolute;
+      top: 0; right: 0;
+      width: 36px; height: 36px;
+      background: linear-gradient(225deg, var(--mist) 50%, var(--lavender) 50%);
+      box-shadow: -2px 2px 6px rgba(150,160,210,0.2);
+    }
+
+    .date-line {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 13px;
+      color: var(--text-light);
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadein 0.6s 0.7s ease forwards;
+    }
+
+    .salutation {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 300;
+      color: var(--ink);
+      margin-bottom: 28px;
+      line-height: 1.2;
+      opacity: 0;
+      animation: fadein 0.6s 0.85s ease forwards;
+    }
+
+    .body-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18.5px;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--text);
+      position: relative;
+    }
+
+    .body-text p {
+      margin-bottom: 22px;
+      opacity: 0;
+    }
+
+    .body-text p:nth-child(1) { animation: fadein 0.7s 1.0s ease forwards; }
+    .body-text p:nth-child(2) { animation: fadein 0.7s 1.2s ease forwards; }
+    .body-text p:nth-child(3) { animation: fadein 0.7s 1.4s ease forwards; }
+    .body-text p:nth-child(4) { animation: fadein 0.7s 1.6s ease forwards; }
+    .body-text p:nth-child(5) { animation: fadein 0.7s 1.8s ease forwards; }
+
+    .body-text em {
+      font-style: italic;
+      color: var(--lavender-deep);
+    }
+
+    .body-text strong {
+      font-weight: 400;
+      color: var(--ink);
+      border-bottom: 1px solid var(--lavender);
+      padding-bottom: 1px;
+    }
+
+    .sign-off {
+      margin-top: 36px;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 15px;
+      color: var(--text-light);
+      opacity: 0;
+      animation: fadein 0.6s 2.1s ease forwards;
+    }
+
+    .signature {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 300;
+      color: var(--lavender-deep);
+      margin-top: 6px;
+      opacity: 0;
+      animation: fadein 0.7s 2.3s ease forwards;
+    }
+
+    /* Postscript note at bottom */
+    .postscript {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px dashed rgba(180,190,230,0.45);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12.5px;
+      color: var(--text-light);
+      letter-spacing: 0.02em;
+      opacity: 0;
+      animation: fadein 0.7s 2.5s ease forwards;
+    }
+
+    /* Small friendship motif — paper airplane, no love symbols */
+    .motif {
+      position: absolute;
+      top: 24px;
+      left: 28px;
+      opacity: 0.22;
+      font-size: 22px;
+      line-height: 1;
+      animation: fadein 1s 0.4s ease forwards;
+    }
+
+    @media (max-width: 600px) {
+      .card { padding: 44px 28px 40px 28px; }
+      .card::after { left: 0; }
+      .body-text { font-size: 17px; }
+      .salutation { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="fleck"></div>
+  <div class="fleck"></div>
+  <div class="fleck"></div>
+  <div class="fleck"></div>
+  <div class="fleck"></div>
+
+  <div class="envelope-wrapper">
+
+    <div class="label-strip">
+      <div class="dot"></div>
+      <span>A letter, from me to you</span>
+    </div>
+
+    <div class="card">
+      <div class="torn-top"></div>
+      <div class="corner-fold"></div>
+      <div class="motif">✈</div>
+
+      <div class="date-line">written on a quiet night</div>
+
+      <div class="salutation">Hey — Titli</div>
+
+      <div class="body-text">
+        <p>
+          I know you don't want to talk with me, and <em>I kinda deserve that.</em>
+        </p>
+        <p>
+          I didn't mean to hurt you — but my actions are never in sync with my intentions.
+          In retrospect, I shouldn't have bombarded you with those questions.
+          I was making you feel even more overwhelmed than you already were.
+        </p>
+        <p>
+          I know I messed it up. And I don't want any answers —
+          I'm not reaching out to talk about what happened.
+          <strong>Let the past be in the past.</strong> Forget about it.
+        </p>
+        <p>
+          I just want to talk to my best friend.
+          The person who knew me the best.
+          There is no one to blame for what happened — it was bound to happen.
+          But it will be both of our fault if this becomes permanent
+          and we stop talking altogether.
+        </p>
+        <p>
+          I made a huge mistake — falling in love with the person I could talk to about anything,
+          and ruining it all. I've accepted what happened.
+          I've made peace with the idea that we might never end up together.
+          <em>I just can't let a good friend walk.</em>
+          Please — there is too much happening, and I need to talk with you.
+        </p>
+      </div>
+
+      <div class="sign-off">always,</div>
+      <div class="signature">Keshav</div>
+
+      <div class="postscript">
+        I am truly sorry for everything- I won't make the same mistakes.
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
