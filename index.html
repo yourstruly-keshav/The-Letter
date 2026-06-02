@@ -532,7 +532,10 @@
         },
         body: JSON.stringify({ posts })
       });
-      if (!res.ok) throw new Error('save failed');
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(`${res.status}: ${errText}`);
+      }
     }
 
     async function fetchAndRender() {
@@ -575,7 +578,7 @@
         setStatus('done');
       } catch (e) {
         setStatus('error');
-        alert('Couldn\'t save — check your connection and try again.');
+        alert('Save failed: ' + e.message);
       } finally {
         btn.disabled    = false;
         btn.textContent = 'Post →';
