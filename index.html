@@ -565,24 +565,12 @@
     }
 
     // ── ADD POST ──
-    async function addPost() {
-      const title = document.getElementById('post-title').value.trim();
-      const body  = document.getElementById('post-body').value.trim();
-      if (!body) return;
-
-      const btn = document.getElementById('btn-post');
-      btn.disabled = true;
-      btn.textContent = '...';
-      setStatus('syncing');
-
-      try {
-        const posts = await fetchPosts();
-        posts.unshift({
-          id: Date.now(),
-          title: title || null,
-          body,
-          date: new Date().toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' })
-        });
+    async function fetchPosts() {
+  const res = await fetch(`${JSONBIN_BASE}/latest`);  // no header needed for public bin
+  if (!res.ok) throw new Error('fetch failed');
+  const data = await res.json();
+  return data.record.posts || [];
+}
         await savePosts(posts);
         document.getElementById('post-title').value = '';
         document.getElementById('post-body').value  = '';
