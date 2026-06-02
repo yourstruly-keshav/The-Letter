@@ -55,7 +55,6 @@
       100% { transform: translateY(-60px) rotate(180deg); opacity:0.18; }
     }
 
-    /* ── NAV TABS ── */
     .nav {
       display: flex;
       gap: 6px;
@@ -89,7 +88,6 @@
       box-shadow: 0 2px 8px rgba(150,160,210,0.18);
     }
 
-    /* ── SHARED WRAPPER ── */
     .page {
       width: 100%;
       max-width: 680px;
@@ -104,7 +102,6 @@
     }
     @keyframes fadein { from { opacity:0; } to { opacity:1; } }
 
-    /* ── LETTER PAGE ── */
     .label-strip {
       display: flex;
       align-items: center;
@@ -238,7 +235,6 @@
       color: var(--text-light);
     }
 
-    /* Write box */
     .write-card {
       background: var(--paper);
       border-radius: 4px;
@@ -310,8 +306,8 @@
     }
     .btn-post:hover { background: #8898d0; transform: translateY(-1px); }
     .btn-post:active { transform: translateY(0); }
+    .btn-post:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-    /* Posts list */
     .posts-list { display: flex; flex-direction: column; gap: 18px; }
 
     .post-card {
@@ -388,6 +384,36 @@
       color: rgba(159,168,218,0.7);
     }
 
+    /* Loading / status indicator */
+    .status-dot {
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--lavender-deep);
+      margin-left: 8px;
+      vertical-align: middle;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .status-dot.syncing {
+      opacity: 1;
+      animation: pulse 0.8s ease infinite;
+    }
+    .status-dot.done {
+      opacity: 1;
+      background: #a8d5ba;
+      animation: none;
+    }
+    .status-dot.error {
+      opacity: 1;
+      background: #e0a0b0;
+      animation: none;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50% { transform: scale(1.5); opacity: 1; }
+    }
+
     @media (max-width: 600px) {
       .card, .write-card, .post-card { padding: 40px 24px 32px; }
       .card::after { left: 0; }
@@ -454,6 +480,7 @@
     <div class="blog-header">
       <div class="dot" style="width:8px;height:8px;border-radius:50%;background:var(--lavender-deep);"></div>
       <span>Pages — things I'm thinking about</span>
+      <span class="status-dot" id="status-dot"></span>
     </div>
 
     <!-- Write box -->
@@ -462,73 +489,134 @@
       <input class="write-title-input" id="post-title" type="text" placeholder="a title for today..." maxlength="120"/>
       <textarea class="write-body-input" id="post-body" placeholder="what's on your mind...&#10;&#10;write as much or as little as you want." rows="5"></textarea>
       <div class="write-actions">
-        <button class="btn-post" onclick="addPost()">Post →</button>
+        <button class="btn-post" id="btn-post" onclick="addPost()">Post →</button>
       </div>
     </div>
 
     <!-- Posts -->
-    <div class="posts-list" id="posts-list"></div>
+    <div class="posts-list" id="posts-list">
+      <div class="empty-state">loading...</div>
+    </div>
   </div>
 
   <script>
+    // ─────────────────────────────────────────────
+    // CONFIG — replace these two values:
+    //   1. Create a free account at https://jsonbin.io
+    //   2. Go to API Keys → create a key, paste it below
+    //   3. Create a Bin with initial content: {"posts":[]}
+    //      then paste its ID below
+    // ─────────────────────────────────────────────
+    const JSONBIN_API_KEY  = 'YOUR_API_KEY_HERE';   // e.g. '$2a$10$abc...'
+    const JSONBIN_BIN_ID   = 'YOUR_BIN_ID_HERE';    // e.g. '665abc123...'
+    const JSONBIN_BASE     = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
+
+    // ── STATUS DOT ──
+    function setStatus(state) { // 'syncing' | 'done' | 'error' | ''
+      const dot = document.getElementById('status-dot');
+      dot.className = 'status-dot' + (state ? ' ' + state : '');
+      if (state === 'done') setTimeout(() => setStatus(''), 2000);
+    }
+
     // ── TAB SWITCHING ──
     function switchTab(name, btn) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
       document.getElementById('tab-' + name).classList.add('active');
       btn.classList.add('active');
-      if (name === 'blog') renderPosts();
+      if (name === 'blog') fetchAndRender();
     }
 
-    // ── STORAGE ──
-    const STORE_KEY = 'pages_posts_v1';
-
-    function getPosts() {
-      try { return JSON.parse(localStorage.getItem(STORE_KEY)) || []; }
-      catch { return []; }
+    // ── FETCH posts from JSONBin ──
+    async function fetchPosts() {
+      const res = await fetch(`${JSONBIN_BASE}/latest`, {
+        headers: { 'X-Master-Key': JSONBIN_API_KEY }
+      });
+      if (!res.ok) throw new Error('fetch failed');
+      const data = await res.json();
+      return data.record.posts || [];
     }
 
-    function savePosts(posts) {
-      localStorage.setItem(STORE_KEY, JSON.stringify(posts));
+    // ── SAVE posts to JSONBin ──
+    async function savePosts(posts) {
+      const res = await fetch(JSONBIN_BASE, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Master-Key': JSONBIN_API_KEY
+        },
+        body: JSON.stringify({ posts })
+      });
+      if (!res.ok) throw new Error('save failed');
+    }
+
+    // ── FETCH + RENDER ──
+    async function fetchAndRender() {
+      setStatus('syncing');
+      try {
+        const posts = await fetchPosts();
+        renderPosts(posts);
+        setStatus('done');
+      } catch (e) {
+        setStatus('error');
+        document.getElementById('posts-list').innerHTML =
+          '<div class="empty-state">couldn\'t load posts — check your connection.</div>';
+      }
     }
 
     // ── ADD POST ──
-    function addPost() {
+    async function addPost() {
       const title = document.getElementById('post-title').value.trim();
       const body  = document.getElementById('post-body').value.trim();
       if (!body) return;
 
-      const posts = getPosts();
-      posts.unshift({
-        id: Date.now(),
-        title: title || null,
-        body,
-        date: new Date().toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' })
-      });
-      savePosts(posts);
+      const btn = document.getElementById('btn-post');
+      btn.disabled = true;
+      btn.textContent = '...';
+      setStatus('syncing');
 
-      document.getElementById('post-title').value = '';
-      document.getElementById('post-body').value  = '';
-      renderPosts();
+      try {
+        const posts = await fetchPosts();
+        posts.unshift({
+          id: Date.now(),
+          title: title || null,
+          body,
+          date: new Date().toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' })
+        });
+        await savePosts(posts);
+        document.getElementById('post-title').value = '';
+        document.getElementById('post-body').value  = '';
+        renderPosts(posts);
+        setStatus('done');
+      } catch (e) {
+        setStatus('error');
+        alert('Couldn\'t save — check your connection and try again.');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Post →';
+      }
     }
 
     // ── DELETE POST ──
-    function deletePost(id) {
-      const posts = getPosts().filter(p => p.id !== id);
-      savePosts(posts);
-      renderPosts();
+    async function deletePost(id) {
+      setStatus('syncing');
+      try {
+        const posts = (await fetchPosts()).filter(p => p.id !== id);
+        await savePosts(posts);
+        renderPosts(posts);
+        setStatus('done');
+      } catch (e) {
+        setStatus('error');
+      }
     }
 
     // ── RENDER ──
-    function renderPosts() {
-      const list  = document.getElementById('posts-list');
-      const posts = getPosts();
-
+    function renderPosts(posts) {
+      const list = document.getElementById('posts-list');
       if (!posts.length) {
         list.innerHTML = '<div class="empty-state">nothing here yet — write something.</div>';
         return;
       }
-
       list.innerHTML = posts.map(p => `
         <div class="post-card">
           <div class="post-card-top"></div>
@@ -546,8 +634,8 @@
       return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     }
 
-    // init
-    renderPosts();
+    // init — load posts when page opens on the blog tab
+    fetchAndRender();
   </script>
 </body>
 </html>
