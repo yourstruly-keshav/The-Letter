@@ -29,13 +29,14 @@
         radial-gradient(ellipse at 85% 75%, #ddd6f3 0%, transparent 55%),
         radial-gradient(ellipse at 50% 50%, #e8f0ff 0%, transparent 80%);
       display: flex;
-      flex-direction: column;
       align-items: center;
-      padding: 40px 20px 60px;
+      justify-content: center;
+      padding: 40px 20px;
       font-family: 'DM Sans', sans-serif;
       overflow-x: hidden;
     }
 
+    /* Floating paper flecks */
     .fleck {
       position: fixed;
       border-radius: 50%;
@@ -43,538 +44,277 @@
       pointer-events: none;
       animation: drift linear infinite;
     }
-    .fleck:nth-child(1) { width:6px; height:6px; background:var(--lavender-deep); top:10%; left:8%;  animation-duration:18s; }
-    .fleck:nth-child(2) { width:4px; height:4px; background:var(--blue-mid);      top:30%; left:92%; animation-duration:22s; animation-delay:-5s; }
-    .fleck:nth-child(3) { width:8px; height:8px; background:var(--lavender);      top:70%; left:5%;  animation-duration:25s; animation-delay:-10s; }
-    .fleck:nth-child(4) { width:5px; height:5px; background:var(--blue-soft);     top:80%; left:88%; animation-duration:20s; animation-delay:-3s; }
-    .fleck:nth-child(5) { width:3px; height:3px; background:var(--lavender-deep); top:50%; left:50%; animation-duration:30s; animation-delay:-8s; }
+    .fleck:nth-child(1)  { width:6px;  height:6px;  background:var(--lavender-deep); top:10%; left:8%;  animation-duration:18s; animation-delay:0s; }
+    .fleck:nth-child(2)  { width:4px;  height:4px;  background:var(--blue-mid);       top:30%; left:92%; animation-duration:22s; animation-delay:-5s; }
+    .fleck:nth-child(3)  { width:8px;  height:8px;  background:var(--lavender);       top:70%; left:5%;  animation-duration:25s; animation-delay:-10s; }
+    .fleck:nth-child(4)  { width:5px;  height:5px;  background:var(--blue-soft);      top:80%; left:88%; animation-duration:20s; animation-delay:-3s; }
+    .fleck:nth-child(5)  { width:3px;  height:3px;  background:var(--lavender-deep);  top:50%; left:50%; animation-duration:30s; animation-delay:-8s; }
 
     @keyframes drift {
-      0%   { transform: translateY(0) rotate(0deg); opacity:.18; }
-      50%  { opacity:.28; }
-      100% { transform: translateY(-60px) rotate(180deg); opacity:.18; }
+      0%   { transform: translateY(0px) rotate(0deg); opacity:0.18; }
+      50%  { opacity: 0.28; }
+      100% { transform: translateY(-60px) rotate(180deg); opacity:0.18; }
     }
-    @keyframes fadein  { from { opacity:0; } to { opacity:1; } }
-    @keyframes unfold  {
-      from { opacity:0; transform: translateY(22px) scale(0.97); }
+
+    .envelope-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 680px;
+      animation: unfold 0.9s cubic-bezier(0.22,1,0.36,1) both;
+    }
+
+    @keyframes unfold {
+      from { opacity:0; transform: translateY(28px) scale(0.97); }
       to   { opacity:1; transform: translateY(0) scale(1); }
     }
 
-    /* ── NAV ── */
-    .nav {
+    /* Top label strip */
+    .label-strip {
       display: flex;
-      gap: 6px;
-      margin-bottom: 28px;
-      background: rgba(255,255,255,0.45);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(197,202,233,0.5);
-      border-radius: 40px;
-      padding: 5px;
-      animation: fadein 0.6s 0.2s ease both;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding-left: 4px;
+      opacity: 0;
+      animation: fadein 0.7s 0.5s ease forwards;
     }
-    .nav-btn {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 12px;
-      letter-spacing: 0.12em;
+    @keyframes fadein { to { opacity:1; } }
+
+    .label-strip .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--lavender-deep);
+    }
+    .label-strip span {
+      font-size: 11px;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--text-light);
-      background: transparent;
-      border: none;
-      padding: 8px 22px;
-      border-radius: 32px;
-      cursor: pointer;
-      transition: all 0.22s ease;
-    }
-    .nav-btn:hover { color: var(--ink); }
-    .nav-btn.active {
-      background: var(--paper);
-      color: var(--ink);
-      box-shadow: 0 2px 8px rgba(150,160,210,0.18);
+      font-weight: 400;
     }
 
-    /* ── PAGES ── */
-    .page { width:100%; max-width:680px; display:none; animation: unfold 0.5s cubic-bezier(0.22,1,0.36,1) both; }
-    .page.active { display:block; }
-
-    /* ── LETTER TAB ── */
-    .label-strip {
-      display:flex; align-items:center; gap:10px;
-      margin-bottom:16px; padding-left:4px;
-    }
-    .label-strip .dot { width:8px; height:8px; border-radius:50%; background:var(--lavender-deep); }
-    .label-strip span { font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--text-light); }
-
+    /* Paper card */
     .card {
       background: var(--paper);
-      border-radius: 4px;
-      box-shadow: 0 2px 0 0 var(--lavender), 0 12px 40px rgba(120,130,200,0.18), 0 2px 8px rgba(100,120,200,0.10);
+      border-radius: 4px 4px 4px 4px;
+      box-shadow:
+        0 2px 0 0 var(--lavender),
+        0 12px 40px rgba(120,130,200,0.18),
+        0 2px 8px rgba(100,120,200,0.10);
       position: relative;
       overflow: hidden;
       padding: 56px 60px 52px 60px;
     }
+
+    /* Ruled lines subtle texture */
     .card::before {
-      content:''; position:absolute; inset:0;
-      background-image: repeating-linear-gradient(to bottom, transparent, transparent 31px, rgba(180,190,230,0.13) 32px);
-      pointer-events:none;
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 31px,
+        rgba(180,190,230,0.13) 32px
+      );
+      pointer-events: none;
     }
 
+    /* Left margin line */
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 88px; bottom: 0;
+      width: 1px;
+      background: rgba(197,202,233,0.45);
+    }
+
+    /* Torn top edge effect */
     .torn-top {
-      position:absolute; top:0; left:0; right:0; height:6px;
-      background:linear-gradient(to right, var(--blue-soft), var(--lavender), var(--blue-soft));
-      opacity:0.6;
-    }
-    .corner-fold {
-      position:absolute; top:0; right:0; width:36px; height:36px;
-      background:linear-gradient(225deg, var(--mist) 50%, var(--lavender) 50%);
-      box-shadow:-2px 2px 6px rgba(150,160,210,0.2);
-    }
-    .motif { position:absolute; top:24px; left:28px; opacity:0.22; font-size:22px; }
-    .date-line { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; color:var(--text-light); margin-bottom:32px; }
-    .salutation { font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:300; color:var(--ink); margin-bottom:28px; }
-    .body-text { font-family:'Cormorant Garamond',serif; font-size:18.5px; font-weight:300; line-height:1.9; color:var(--text); }
-    .body-text p { margin-bottom:22px; }
-    .body-text em { font-style:italic; color:var(--lavender-deep); }
-    .body-text strong { font-weight:400; color:var(--ink); border-bottom:1px solid var(--lavender); padding-bottom:1px; }
-    .sign-off { margin-top:36px; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:15px; color:var(--text-light); }
-    .signature { font-family:'Cormorant Garamond',serif; font-size:32px; font-weight:300; color:var(--lavender-deep); margin-top:6px; }
-    .postscript { margin-top:32px; padding-top:24px; border-top:1px dashed rgba(180,190,230,0.45); font-size:12.5px; color:var(--text-light); letter-spacing:.02em; }
-
-    /* ── CALENDAR TAB ── */
-    .cal-header-strip {
-      display:flex; align-items:center; gap:10px;
-      margin-bottom:20px; padding-left:4px;
-    }
-    .cal-header-strip span { font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--text-light); }
-
-    .cal-card {
-      background: var(--paper);
-      border-radius: 4px;
-      box-shadow: 0 2px 0 0 var(--lavender), 0 12px 40px rgba(120,130,200,0.18);
-      overflow: hidden;
-      position: relative;
-    }
-    .cal-card::before {
-      content:''; position:absolute; inset:0;
-      background-image: repeating-linear-gradient(to bottom, transparent, transparent 31px, rgba(180,190,230,0.08) 32px);
-      pointer-events:none; z-index:0;
-    }
-
-    .cal-top-bar {
-      height: 5px;
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 6px;
       background: linear-gradient(to right, var(--blue-soft), var(--lavender), var(--blue-soft));
       opacity: 0.6;
     }
 
-    .cal-nav {
-      display:flex; align-items:center; justify-content:space-between;
-      padding: 22px 30px 16px;
-      position: relative; z-index:1;
+    /* Corner fold */
+    .corner-fold {
+      position: absolute;
+      top: 0; right: 0;
+      width: 36px; height: 36px;
+      background: linear-gradient(225deg, var(--mist) 50%, var(--lavender) 50%);
+      box-shadow: -2px 2px 6px rgba(150,160,210,0.2);
     }
-    .cal-month-label {
-      font-family:'Cormorant Garamond',serif;
-      font-size:22px; font-weight:300; color:var(--ink);
-      letter-spacing:0.04em;
-    }
-    .cal-arrow {
-      background:none; border:none; cursor:pointer;
-      color:var(--lavender-deep); font-size:18px;
-      padding:4px 10px; border-radius:20px;
-      transition: background 0.18s, color 0.18s;
-    }
-    .cal-arrow:hover { background:var(--lavender); color:var(--ink); }
 
-    .cal-grid {
-      padding: 0 20px 24px;
-      position: relative; z-index:1;
+    .date-line {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 13px;
+      color: var(--text-light);
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadein 0.6s 0.7s ease forwards;
     }
-    .cal-weekdays {
-      display:grid; grid-template-columns:repeat(7,1fr);
-      margin-bottom:8px;
-    }
-    .cal-weekday {
-      text-align:center;
-      font-size:10.5px; letter-spacing:.12em; text-transform:uppercase;
-      color:var(--text-light); padding:6px 0;
-    }
-    .cal-days {
-      display:grid; grid-template-columns:repeat(7,1fr);
-      gap:4px;
-    }
-    .cal-day {
-      aspect-ratio:1;
-      display:flex; align-items:center; justify-content:center;
-      border-radius:50%;
-      font-family:'Cormorant Garamond',serif;
-      font-size:16px; font-weight:300;
-      color:var(--text);
-      cursor:default;
-      position:relative;
-      transition: all 0.18s ease;
-      user-select:none;
-    }
-    .cal-day.empty { cursor:default; }
-    .cal-day.has-note {
-      cursor:pointer;
-      background: rgba(197,202,233,0.35);
+
+    .salutation {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 300;
       color: var(--ink);
-      font-weight:400;
+      margin-bottom: 28px;
+      line-height: 1.2;
+      opacity: 0;
+      animation: fadein 0.6s 0.85s ease forwards;
     }
-    .cal-day.has-note::after {
-      content:'';
-      position:absolute; bottom:5px; left:50%; transform:translateX(-50%);
-      width:4px; height:4px; border-radius:50%;
-      background:var(--lavender-deep);
+
+    .body-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18.5px;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--text);
+      position: relative;
     }
-    .cal-day.has-note:hover {
-      background: var(--lavender);
-      transform: scale(1.1);
+
+    .body-text p {
+      margin-bottom: 22px;
+      opacity: 0;
     }
-    .cal-day.today {
-      border: 1.5px solid var(--lavender-deep);
+
+    .body-text p:nth-child(1) { animation: fadein 0.7s 1.0s ease forwards; }
+    .body-text p:nth-child(2) { animation: fadein 0.7s 1.2s ease forwards; }
+    .body-text p:nth-child(3) { animation: fadein 0.7s 1.4s ease forwards; }
+    .body-text p:nth-child(4) { animation: fadein 0.7s 1.6s ease forwards; }
+    .body-text p:nth-child(5) { animation: fadein 0.7s 1.8s ease forwards; }
+
+    .body-text em {
+      font-style: italic;
       color: var(--lavender-deep);
     }
-    .cal-day.today.has-note {
-      background: rgba(159,168,218,0.2);
+
+    .body-text strong {
+      font-weight: 400;
+      color: var(--ink);
+      border-bottom: 1px solid var(--lavender);
+      padding-bottom: 1px;
     }
 
-    /* ── NOTE OVERLAY ── */
-    .note-overlay {
-      display:none;
-      position:fixed; inset:0;
-      background: rgba(200,210,240,0.45);
-      backdrop-filter: blur(6px);
-      z-index:100;
-      align-items:center; justify-content:center;
-      padding:24px 20px;
-      animation: fadein 0.25s ease;
-    }
-    .note-overlay.open { display:flex; }
-
-    .note-inner {
-      width:100%; max-width:620px;
-      max-height:88vh;
-      overflow-y:auto;
-      animation: unfold 0.35s cubic-bezier(0.22,1,0.36,1) both;
+    .sign-off {
+      margin-top: 36px;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 15px;
+      color: var(--text-light);
+      opacity: 0;
+      animation: fadein 0.6s 2.1s ease forwards;
     }
 
-    .note-card {
-      background: var(--paper);
-      border-radius:4px;
-      box-shadow: 0 2px 0 0 var(--lavender), 0 20px 60px rgba(100,120,200,0.22);
-      position:relative; overflow:hidden;
-      padding: 52px 56px 48px;
-    }
-    .note-card::before {
-      content:''; position:absolute; inset:0;
-      background-image: repeating-linear-gradient(to bottom, transparent, transparent 31px, rgba(180,190,230,0.13) 32px);
-      pointer-events:none;
+    .signature {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 300;
+      color: var(--lavender-deep);
+      margin-top: 6px;
+      opacity: 0;
+      animation: fadein 0.7s 2.3s ease forwards;
     }
 
-    .note-close {
-      position:absolute; top:18px; right:18px;
-      background:none; border:none; cursor:pointer;
-      font-size:20px; color:var(--text-light);
-      width:32px; height:32px; border-radius:50%;
-      display:flex; align-items:center; justify-content:center;
-      transition: background 0.18s, color 0.18s;
-      z-index:2;
-    }
-    .note-close:hover { background:var(--lavender); color:var(--ink); }
-    .note-date-tag {
-      font-family:'Cormorant Garamond',serif; font-style:italic;
-      font-size:13px; color:var(--text-light);
-      margin-bottom:28px;
-    }
-    .note-salutation {
-      font-family:'Cormorant Garamond',serif;
-      font-size:26px; font-weight:300; color:var(--ink);
-      margin-bottom:24px;
-    }
-    .note-body {
-      font-family:'Cormorant Garamond',serif;
-      font-size:18px; font-weight:300; line-height:1.9;
-      color:var(--text); white-space:pre-wrap;
-    }
-    .note-body em { font-style:italic; color:var(--lavender-deep); }
-    .note-sign-off {
-      margin-top:32px;
-      font-family:'Cormorant Garamond',serif; font-style:italic;
-      font-size:14px; color:var(--text-light);
-    }
-    .note-signature {
-      font-family:'Cormorant Garamond',serif;
-      font-size:28px; font-weight:300; color:var(--lavender-deep);
-      margin-top:4px;
+    /* Postscript note at bottom */
+    .postscript {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px dashed rgba(180,190,230,0.45);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12.5px;
+      color: var(--text-light);
+      letter-spacing: 0.02em;
+      opacity: 0;
+      animation: fadein 0.7s 2.5s ease forwards;
     }
 
-    @media (max-width:600px) {
-      .card, .note-card { padding:40px 24px 36px; }
-      .card::after, .note-card::after { left:0; }
-      .body-text, .note-body { font-size:17px; }
-      .cal-grid { padding:0 10px 20px; }
-      .cal-nav { padding:18px 16px 12px; }
+    /* Small friendship motif — paper airplane, no love symbols */
+    .motif {
+      position: absolute;
+      top: 24px;
+      left: 28px;
+      opacity: 0.22;
+      font-size: 22px;
+      line-height: 1;
+      animation: fadein 1s 0.4s ease forwards;
+    }
+
+    @media (max-width: 600px) {
+      .card { padding: 44px 28px 40px 28px; }
+      .card::after { left: 0; }
+      .body-text { font-size: 17px; }
+      .salutation { font-size: 24px; }
     }
   </style>
 </head>
 <body>
 
-  <div class="fleck"></div><div class="fleck"></div><div class="fleck"></div>
-  <div class="fleck"></div><div class="fleck"></div>
+  <div class="fleck"></div>
+  <div class="fleck"></div>
+  <div class="fleck"></div>
+  <div class="fleck"></div>
+  <div class="fleck"></div>
 
-  <!-- NAV -->
-  <nav class="nav">
-    <button class="nav-btn active" onclick="switchTab('letter',this)">✈ The Letter</button>
-    <button class="nav-btn"        onclick="switchTab('calendar',this)">◦ Calendar of Thought</button>
-  </nav>
+  <div class="envelope-wrapper">
 
-  <!-- ═══════════════════════════════════════════
-       LETTER TAB
-  ═══════════════════════════════════════════ -->
-  <div class="page active" id="tab-letter">
     <div class="label-strip">
       <div class="dot"></div>
       <span>A letter, from me to you</span>
     </div>
+
     <div class="card">
       <div class="torn-top"></div>
       <div class="corner-fold"></div>
       <div class="motif">✈</div>
+
       <div class="date-line">written on a quiet night</div>
+
       <div class="salutation">Hey —</div>
+
       <div class="body-text">
-        <p>I know you don't want to talk with me, and <em>I kinda deserve that.</em></p>
-        <p>I didn't mean to hurt you — but my actions are never in sync with my intentions.
+        <p>
+          I know you don't want to talk with me, and <em>I kinda deserve that.</em>
+        </p>
+        <p>
+          I didn't mean to hurt you — but my actions are never in sync with my intentions.
           In retrospect, I shouldn't have bombarded you with those questions.
-          I was making you feel even more overwhelmed than you already were.</p>
-        <p>I know I messed it up. And I don't want any answers —
+          I was making you feel even more overwhelmed than you already were.
+        </p>
+        <p>
+          I know I messed it up. And I don't want any answers —
           I'm not reaching out to talk about what happened.
-          <strong>Let the past be in the past.</strong> Forget about it.</p>
-        <p>I just want to talk to my best friend.
+          <strong>Let the past be in the past.</strong> Forget about it.
+        </p>
+        <p>
+          I just want to talk to my best friend.
           The person who knew me the best.
           There is no one to blame for what happened — it was bound to happen.
           But it will be both of our fault if this becomes permanent
-          and we stop talking altogether.</p>
-        <p>I made a huge mistake — falling in love with the person I could talk to about anything,
+          and we stop talking altogether.
+        </p>
+        <p>
+          I made a huge mistake — falling in love with the person I could talk to about anything,
           and ruining it all. I've accepted what happened.
           I've made peace with the idea that we might never end up together.
           <em>I just can't let a good friend walk.</em>
-          Please — there is too much happening, and I need to talk with you.</p>
+          Please — there is too much happening, and I need to talk with you.
+        </p>
       </div>
+
       <div class="sign-off">always,</div>
       <div class="signature">me</div>
+
       <div class="postscript">
         no expectations. no pressure. just — if you ever feel ready, I'm still here.
       </div>
     </div>
+
   </div>
 
-  <!-- ═══════════════════════════════════════════
-       CALENDAR TAB
-  ═══════════════════════════════════════════ -->
-  <div class="page" id="tab-calendar">
-    <div class="cal-header-strip">
-      <div class="dot" style="width:8px;height:8px;border-radius:50%;background:var(--lavender-deep);"></div>
-      <span>Days — little notes along the way</span>
-    </div>
-
-    <div class="cal-card">
-      <div class="cal-top-bar"></div>
-      <div class="cal-nav">
-        <button class="cal-arrow" onclick="changeMonth(-1)">&#8592;</button>
-        <div class="cal-month-label" id="cal-month-label"></div>
-        <button class="cal-arrow" onclick="changeMonth(1)">&#8594;</button>
-      </div>
-      <div class="cal-grid">
-        <div class="cal-weekdays">
-          <div class="cal-weekday">Su</div><div class="cal-weekday">Mo</div>
-          <div class="cal-weekday">Tu</div><div class="cal-weekday">We</div>
-          <div class="cal-weekday">Th</div><div class="cal-weekday">Fr</div>
-          <div class="cal-weekday">Sa</div>
-        </div>
-        <div class="cal-days" id="cal-days"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════════════
-       NOTE OVERLAY
-  ═══════════════════════════════════════════ -->
-  <div class="note-overlay" id="note-overlay" onclick="closeNote(event)">
-    <div class="note-inner">
-      <div class="note-card">
-        <div class="torn-top"></div>
-        <button class="note-close" onclick="closeNoteBtn()">×</button>
-        <div class="note-date-tag" id="note-date-tag"></div>
-        <div class="note-salutation" id="note-salutation"></div>
-        <div class="note-body" id="note-body"></div>
-        <div class="note-sign-off" id="note-sign-off"></div>
-        <div class="note-signature" id="note-signature"></div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // ══════════════════════════════════════════
-    // NOTES DATA  — add entries here each day
-    // key: "YYYY-M-D"  (no leading zeros)
-    // ══════════════════════════════════════════
-    const NOTES = {
-      "2026-5-1": {
-        salutation: "Hey Titli,",
-        body: `So, I was trying to build this website such that there would be a tab of pages where I could post my thoughts whenever I wanted, but it wasn't working properly. First, the notes were being stored locally, so no one else could see what I wrote. Then I tried hosting it on JSONBin, but there was some API error. I even bought a JSONBin subscription, but it still didn't work.
-
-Then, about three days back, I got this idea: instead of pages, I could make a calendar where clicking on a date opens a letter, and I would just code a new letter into it every day. I got the idea from _The Notebook_ — the Ryan Gosling one. In that movie, he wrote 365 letters to his love after a misunderstanding and waited for seven years.
-
-So I thought I could host my letters from June 2026 onwards and see how it goes. I don't know if I'll be able to keep up, but I want to try.
-
-Anyways, enough about me. I hope you're doing well, enjoying life, and are happy and content with where you are. I hope you're not wasting your time being sad, overthinking, or being anxious. I wish the best for you.
-
-I'm proud of you.`,
-        signOff: "Love always,",
-        signature: "Keshav"
-      },
-      "2026-5-2": {
-        salutation: "Hey Titli,",
-        body: `I hope you are doing good.
-
-Yesterday, Iris was angry because I didn't mention her in the letter. She has been a very good girl, taking care of me through all of this. She did ask me in the first few days where Mumma was, but then she was very understanding.
-
-She has already grown so much, almost like an adult now. Physically too, her height just doesn't seem to stop increasing. She learned how to jump recently and now keeps hopping around everywhere. She is like a warm ball of sunlight and hope in eternal darkness, such a sweet soul.
-
-She wants to tell Mumma to be happy, healthy, safe, and to live life to the fullest.
-
-I hope you are well and healthy too. I hope your exams are not stressing you out too much, and that you are still able to enjoy your life. I hope your friends are keeping you happy, making you laugh, and giving you all the love that you deserve.
-
-I am here if you need anything.`,
-        signOff: "Love always,",
-        signature: "Keshav"
-      },
-      "2026-5-3": {
-        salutation: "Hey Titli,",
-        body: `Today was a rough day.
-
-I found out that after the divorce of my parents, my dad had twins around a year or so back. I don't really know what to feel about it, or whether I should tell Mumma or not. At this point, I am just done with everything. My life never disappoints when it comes to surprising me.
-
-I tried to do the reading project, but I just couldn't focus, so I ended up watching a movie, _Regretting You_. Mixed feelings about it, honestly, it was okayish, I guess.
-
-Anyways, I hope you are doing well and enjoying life. I wish I could talk with you; I need it. Take care of yourself, study well, and be happy with your life.`,
-        signOff: "Love always,",
-        signature: "Keshav"
-      },
-    };
-
-    // ══════════════════════════════════════════
-    // CALENDAR STATE — starts June 2026
-    // ══════════════════════════════════════════
-    let currentYear  = 2026;
-    let currentMonth = 5; // 0-indexed: 5 = June
-
-    const MONTH_NAMES = [
-      "January","February","March","April","May","June",
-      "July","August","September","October","November","December"
-    ];
-
-    function renderCalendar() {
-      const label = document.getElementById('cal-month-label');
-      const grid  = document.getElementById('cal-days');
-
-      label.textContent = MONTH_NAMES[currentMonth] + ' ' + currentYear;
-      grid.innerHTML = '';
-
-      const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-      const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-
-      const today = new Date();
-      const todayStr = today.getFullYear() + '-' + (today.getMonth()) + '-' + today.getDate(); 
-      // note: month is 0-indexed in Date, so this matches our key format exactly
-
-      // empty cells before first day
-      for (let i = 0; i < firstDay; i++) {
-        const empty = document.createElement('div');
-        empty.className = 'cal-day empty';
-        grid.appendChild(empty);
-      }
-
-      for (let d = 1; d <= daysInMonth; d++) {
-        const key = currentYear + '-' + currentMonth + '-' + d;
-        const div = document.createElement('div');
-        div.className = 'cal-day';
-        div.textContent = d;
-
-        const isToday = (
-          today.getFullYear() === currentYear &&
-          today.getMonth()    === currentMonth &&
-          today.getDate()     === d
-        );
-        if (isToday) div.classList.add('today');
-
-        if (NOTES[key]) {
-          div.classList.add('has-note');
-          div.addEventListener('click', () => openNote(key, d));
-        }
-
-        grid.appendChild(div);
-      }
-    }
-
-    function changeMonth(dir) {
-      currentMonth += dir;
-      if (currentMonth > 11) { currentMonth = 0;  currentYear++; }
-      if (currentMonth < 0)  { currentMonth = 11; currentYear--; }
-      renderCalendar();
-    }
-
-    // ══════════════════════════════════════════
-    // NOTE OVERLAY
-    // ══════════════════════════════════════════
-    function openNote(key, day) {
-      const note = NOTES[key];
-      if (!note) return;
-
-      const [y, m, d] = key.split('-').map(Number);
-      const dateObj = new Date(y, m, d);
-      const dateStr = dateObj.toLocaleDateString('en-IN', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
-
-      document.getElementById('note-date-tag').textContent  = dateStr.toLowerCase();
-      document.getElementById('note-salutation').textContent = note.salutation || 'hey —';
-      document.getElementById('note-body').innerHTML         = formatBody(note.body || '');
-      document.getElementById('note-sign-off').textContent   = note.signOff || 'always,';
-      document.getElementById('note-signature').textContent  = note.signature || 'me';
-
-      document.getElementById('note-overlay').classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function formatBody(text) {
-      // support **bold**, _italic_, and line breaks
-      return text
-        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-        .replace(/_(.*?)_/g, '<em>$1</em>')
-        .replace(/\n/g, '<br>');
-    }
-
-    function closeNote(e) {
-      if (e.target === document.getElementById('note-overlay')) closeNoteBtn();
-    }
-    function closeNoteBtn() {
-      document.getElementById('note-overlay').classList.remove('open');
-      document.body.style.overflow = '';
-    }
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNoteBtn(); });
-
-    // ══════════════════════════════════════════
-    // TAB SWITCHING
-    // ══════════════════════════════════════════
-    function switchTab(name, btn) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById('tab-' + name).classList.add('active');
-      btn.classList.add('active');
-      if (name === 'calendar') renderCalendar();
-    }
-
-    // init calendar
-    renderCalendar();
-  </script>
 </body>
 </html>
