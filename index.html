@@ -273,7 +273,57 @@
       margin-bottom: 20px;
     }
 
-    /* ── NOTE OVERLAY ── */
+    /* ── GREEN MILESTONE ── */
+    .cal-day.milestone-green {
+      cursor: pointer;
+      background: linear-gradient(135deg, #d4edda, #a8d5b5);
+      color: #2d6a4f;
+      font-weight: 500;
+      box-shadow: 0 0 0 2px #74c69d, 0 2px 12px rgba(80,180,120,0.28);
+      animation: milestoneGlowGreen 2.5s ease-in-out infinite;
+      position: relative;
+    }
+    .cal-day.milestone-green::after { background: #52b788; }
+    .cal-day.milestone-green:hover {
+      background: linear-gradient(135deg, #b7e4c7, #74c69d);
+      transform: scale(1.13);
+    }
+    .cal-day.milestone-green .flower-decor {
+      position: absolute;
+      top: -4px; right: -2px;
+      font-size: 10px;
+      line-height: 1;
+      pointer-events: none;
+    }
+    @keyframes milestoneGlowGreen {
+      0%, 100% { box-shadow: 0 0 0 2px #74c69d, 0 2px 12px rgba(80,180,120,0.28); }
+      50%       { box-shadow: 0 0 0 3px #52b788, 0 4px 22px rgba(80,180,120,0.5); }
+    }
+    .note-card.milestone-green-card {
+      background: linear-gradient(160deg, #fdfff5 0%, #f0faf3 60%, #fefdf0 100%);
+    }
+    .note-card.milestone-green-card .torn-top {
+      background: linear-gradient(to right, #95d5b2, #52b788, #95d5b2);
+      opacity: 0.9;
+    }
+    .note-card.milestone-green-card .note-salutation,
+    .note-card.milestone-green-card .note-signature { color: #2d6a4f; }
+    .note-card.milestone-green-card .note-body { color: #374a3a; }
+    .note-card.milestone-green-card .note-body em { color: #52b788; }
+    .note-card.milestone-green-card .note-date-tag,
+    .note-card.milestone-green-card .note-sign-off { color: #74c69d; }
+    .milestone-badge.green-badge {
+      background: linear-gradient(135deg, #b7e4c7, #74c69d);
+      color: #1b4332;
+    }
+    .flower-crown {
+      text-align: center;
+      font-size: 22px;
+      letter-spacing: 4px;
+      margin-bottom: 16px;
+      line-height: 1;
+      user-select: none;
+    }
     .note-overlay {
       display:none;
       position:fixed; inset:0;
@@ -497,6 +547,88 @@ Anyways, I hope you are doing well and enjoying life. I wish I could talk with y
         signOff: "Love always,",
         signature: "Keshav"
       },
+      "2026-5-15": {
+        salutation: "Hey Titli,",
+        milestone: "green",
+        milestoneLabel: "day 60 — 10% of us",
+        body: `It has now been 60 days since we broke up, and I know you might be thinking, "Is he going to remind me or document the number of days every 10 days?" No, I won't do that. But 60 is special because we were together for 600 days, so it's officially 10% of the time we spent together, and I thought that was a milestone worth marking.
+
+Sixty days ago, the floor was wiped out from beneath my feet when you told me that you didn't love me anymore. Then you blocked me and stopped talking to me. At first, I had no idea what would happen next. It felt impossible. I couldn't even get out of bed, but I had to because of end-sem exams.
+
+I thought the breakup would change me, but I don't think it has, or at least not in the ways I expected. I am still the same person. Maybe a little more insecure, but my beliefs, values, and morality are still the same.
+
+For a while, I thought I would wait for you to come back. I thought maybe one day you would realize that we actually had a good run together and that we were good for each other. But I don't think that anymore.
+
+My friends have been really helpful through all of this, and I agree with them when they say that there is someone out there for me who will love me like it's in her blood. Someone who won't leave when I am at my lowest. Someone who will be there no matter what. Someone who, if she ever feels us drifting apart, will try to fix things instead of letting go.
+
+And it's not my duty to find her. But the least I can do for her is make sure that when she does find me, I am not still tangled up in the emotional mess of my past relationship.
+
+I guess you may have found someone too. My friends were saying that your notes, stories, and Instants have been a lot about love lately. If that's true, I am happy for you.
+
+I hope you find good people in life, and I hope you make the most of your time on this planet experiencing happiness, joy, and all the beautiful things life has to offer.`,
+        signOff: "Love always,",
+        signature: "Keshav"
+      },
+      "2026-5-14": {
+        salutation: "Hey Titli,",
+        body: `It's over. The New York Knicks are NBA champions. After 53 years, the Larry O'Brien Trophy is finally going back to New York.
+
+Mamdani, you should have seen how hyped he was. He has already announced a parade for the city. God, it would be such a dream to be in NYC right now.
+
+The No. 7 Toyota of Kobayashi, De Vries, and co. has won Le Mans 2026. They were so happy, and honestly, I was especially happy for Nyck De Vries. Formula E champion, F2 champion, and despite having a very short and difficult run in F1, he found a place where he could truly thrive.
+
+And I have been saving the best for last.
+
+Lewis Hamilton has won the Barcelona Grand Prix. His first win for Ferrari, and he is now second in the Drivers' Championship. Wow. If Ferrari keeps upgrading the car well and ADUO kicks in, Lewis can genuinely put together a title charge and win his 8th World Championship. I really hope my hero does it.
+
+And funnily enough, he might even break the Kardashian curse.
+
+Anyways, I hope you are doing good, college is going well, and your studies aren't being hampered by overthinking. I hope you do well in your exams next month and that you're enjoying life too.`,
+        signOff: "Love always,",
+        signature: "Keshav"
+      },
+      "2026-5-13": {
+        salutation: "Hey Titli,",
+        body: `Today I was corresponding with Arvind Panagariya, the first Vice-Chairman of NITI Aayog and the Chairperson of the 16th Finance Commission, and he told me that the current state of the Indian economy is really worse than it seems. And that's saying something because it already seems really bad.
+
+I don't know how a common man is supposed to take care of his family in such times, and there are even more difficult times ahead, especially in the next 6 to 12 months. Let's see what happens.
+
+At least I have been able to convince my whole family that BJP and Modi are not good for the country. I mean, all his schemes and promises have failed, whether it be the 100 Smart Cities mission, the 5 trillion dollar economy target, and so on. The only reason one has to vote for Modi is Hindutva, and I don't think anyone should vote based on that.
+
+Religious extremism of any kind will kill a nation. If you want an example, just look at our neighbour Pakistan. Religious extremism played a major role in its downfall. If we continue down the same path, I am afraid our destination will be the same.
+
+This is not the India that Pandit Nehru wished for. I have been reading _Nehru: Thought and History_, and he envisioned an India where everyone had equal rights, whether Hindu or Muslim, Brahmin or Dalit, man or woman. Sadly, I think we are moving away from that vision. So I urge you too to convince as many people as possible not to vote for religious extremists.
+
+Anyways, for motorsport, George Russell will start the Grand Prix on pole, with Lewis Hamilton in second and Kimi Antonelli in third. And at Le Mans, the BMW of Magnussen and company will start from Hyperpole.
+
+I hope you are doing well and good, that you are healthy and happy, and living your life to the fullest.`,
+        signOff: "Love always,",
+        signature: "Keshav"
+      },
+      "2026-5-12": {
+        salutation: "Hey Titli,",
+        body: `I have zero words. The new Olivia Rodrigo album is absolute fire. It starts with so much energy and all the yearning that comes before getting together with someone, and by the end it becomes absolutely devastating. I have been listening to it the whole day and bawling my eyes out.
+
+My favourite songs from the first few listens are _Stupid Song_ and _What's Wrong With Me_. You should listen to them too.
+
+This weekend is absolute cinema for motorsport fans. We have the Barcelona-Catalunya Grand Prix and, of course, the most prestigious race of them all, the 24 Hours of Le Mans. Let's see what happens. I am genuinely so excited for both.
+
+I hope you are doing good mentally, emotionally, and physically as well. I hope you are enjoying your life, smiling and laughing, instead of being sad, guilty, or stuck overthinking things.`,
+        signOff: "Love always,",
+        signature: "Keshav"
+      },
+      "2026-5-11": {
+        salutation: "Hey Titli,",
+        body: `Today was the fourth game of the NBA Finals and guess what? The New York Knicks won. They now lead the series 3-1 and need just one more win to become NBA champions. New York is so lucky, they have the best mayor, and now they might just win the NBA championship too.
+
+Tonight Olivia Rodrigo's new album drops, _You Look So Sad for a Girl So in Love_. I can't wait to hear it. A few songs are already out, and wow, they are amazing. You should give it a listen too.
+
+Anyways, I hope you are doing well, enjoying life, and studying well for your exams. I hope you are happy and healthy. I saw that you had tender coconut at Naturals, I hope you enjoyed it.
+
+I also hope you have people to talk to, and that things with Krishna work themselves out.`,
+        signOff: "Love always,",
+        signature: "Keshav"
+      },
       "2026-5-10": {
         salutation: "Hey Titli,",
         body: `I hope you are doing well. I am good.
@@ -646,7 +778,13 @@ Anyways, I hope you are doing good, happy, healthy, and enjoying your life. I ho
         if (isToday) div.classList.add('today');
 
         if (NOTES[key]) {
-          if (NOTES[key].milestone) {
+          if (NOTES[key].milestone === 'green') {
+            div.classList.add('milestone-green');
+            const flower = document.createElement('span');
+            flower.className = 'flower-decor';
+            flower.textContent = '🌸';
+            div.appendChild(flower);
+          } else if (NOTES[key].milestone) {
             div.classList.add('milestone');
           } else {
             div.classList.add('has-note');
@@ -681,15 +819,27 @@ Anyways, I hope you are doing good, happy, healthy, and enjoying your life. I ho
 
       const noteCard = document.querySelector('.note-card');
       const existingBadge = noteCard.querySelector('.milestone-badge');
+      const existingCrown = noteCard.querySelector('.flower-crown');
       if (existingBadge) existingBadge.remove();
-      if (note.milestone) {
+      if (existingCrown) existingCrown.remove();
+      noteCard.classList.remove('milestone-card', 'milestone-green-card');
+
+      if (note.milestone === 'green') {
+        noteCard.classList.add('milestone-green-card');
+        const crown = document.createElement('div');
+        crown.className = 'flower-crown';
+        crown.textContent = '🌿 🌸 🌼 🌸 🌿';
+        noteCard.querySelector('.note-date-tag').before(crown);
+        const badge = document.createElement('div');
+        badge.className = 'milestone-badge green-badge';
+        badge.textContent = '✦ ' + note.milestoneLabel;
+        noteCard.querySelector('.note-date-tag').after(badge);
+      } else if (note.milestone) {
         noteCard.classList.add('milestone-card');
         const badge = document.createElement('div');
         badge.className = 'milestone-badge';
         badge.textContent = '✦ ' + note.milestone;
         noteCard.querySelector('.note-date-tag').after(badge);
-      } else {
-        noteCard.classList.remove('milestone-card');
       }
 
       document.getElementById('note-body').innerHTML         = formatBody(note.body || '');
