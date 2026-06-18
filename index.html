@@ -72,6 +72,8 @@
     /* ── NAV ── */
     .nav {
       display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       gap: 6px;
       margin-bottom: 28px;
       background: rgba(255,255,255,0.45);
@@ -80,6 +82,7 @@
       border-radius: 40px;
       padding: 5px;
       animation: fadein 0.6s 0.2s ease both;
+      max-width: 92vw;
     }
     .nav-btn {
       font-family: 'DM Sans', sans-serif;
@@ -93,6 +96,7 @@
       border-radius: 32px;
       cursor: pointer;
       transition: all 0.22s ease;
+      white-space: nowrap;
     }
     .nav-btn:hover { color: var(--ink); }
     .nav-btn.active {
@@ -503,6 +507,9 @@
       .body-text, .note-body { font-size:17px; }
       .cal-grid { padding:0 10px 20px; }
       .cal-nav { padding:18px 16px 12px; }
+      .nav-btn { padding:8px 14px; font-size:10.5px; letter-spacing:0.08em; }
+      .cal-month-label { font-size:19px; }
+      .flower-crown { font-size:18px; letter-spacing:2px; }
     }
   </style>
 </head>
