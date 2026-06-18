@@ -285,6 +285,7 @@
       transition: background 0.18s, color 0.18s;
     }
     .cal-arrow:hover { background:var(--lavender); color:var(--ink); }
+    .cal-arrow:disabled:hover { background:none; color:var(--lavender-deep); }
 
     .cal-grid {
       padding: 0 20px 24px;
@@ -562,7 +563,7 @@
     <div class="cal-card">
       <div class="cal-top-bar"></div>
       <div class="cal-nav">
-        <button class="cal-arrow" onclick="changeMonth(-1)">&#8592;</button>
+        <button class="cal-arrow" id="cal-prev-btn" onclick="changeMonth(-1)">&#8592;</button>
         <div class="cal-month-label" id="cal-month-label"></div>
         <button class="cal-arrow" onclick="changeMonth(1)">&#8594;</button>
       </div>
@@ -863,12 +864,23 @@ Anyways, I hope you are doing good, happy, healthy, and enjoying your life. I ho
       "July","August","September","October","November","December"
     ];
 
+    const MIN_YEAR  = 2026;
+    const MIN_MONTH = 5; // June 2026 — earliest month allowed
+
     function renderCalendar() {
       const label = document.getElementById('cal-month-label');
       const grid  = document.getElementById('cal-days');
+      const prevBtn = document.getElementById('cal-prev-btn');
 
       label.textContent = MONTH_NAMES[currentMonth] + ' ' + currentYear;
       grid.innerHTML = '';
+
+      const atMin = (currentYear === MIN_YEAR && currentMonth === MIN_MONTH);
+      if (prevBtn) {
+        prevBtn.disabled = atMin;
+        prevBtn.style.opacity = atMin ? '0.25' : '1';
+        prevBtn.style.cursor  = atMin ? 'default' : 'pointer';
+      }
 
       const firstDay = new Date(currentYear, currentMonth, 1).getDay();
       const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
@@ -917,9 +929,18 @@ Anyways, I hope you are doing good, happy, healthy, and enjoying your life. I ho
     }
 
     function changeMonth(dir) {
-      currentMonth += dir;
-      if (currentMonth > 11) { currentMonth = 0;  currentYear++; }
-      if (currentMonth < 0)  { currentMonth = 11; currentYear--; }
+      const next = currentMonth + dir;
+      let ny = currentYear, nm = next;
+      if (nm > 11) { nm = 0;  ny++; }
+      if (nm < 0)  { nm = 11; ny--; }
+
+      // block navigating before the minimum month
+      if (ny < MIN_YEAR || (ny === MIN_YEAR && nm < MIN_MONTH)) {
+        return;
+      }
+
+      currentYear  = ny;
+      currentMonth = nm;
       renderCalendar();
     }
 
