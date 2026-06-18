@@ -34,6 +34,15 @@
       padding: 40px 20px 60px;
       font-family: 'DM Sans', sans-serif;
       overflow-x: hidden;
+      transition: background 0.4s ease;
+    }
+
+    body.theme-gold {
+      background-color: #fdf3cf;
+      background-image:
+        radial-gradient(ellipse at 10% 20%, rgba(244,200,66,0.4) 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 75%, rgba(244,200,66,0.35) 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 50%, rgba(244,200,66,0.3) 0%, transparent 80%);
     }
 
     .fleck {
@@ -138,6 +147,100 @@
     .sign-off { margin-top:36px; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:15px; color:var(--text-light); }
     .signature { font-family:'Cormorant Garamond',serif; font-size:32px; font-weight:300; color:var(--lavender-deep); margin-top:6px; }
     .postscript { margin-top:32px; padding-top:24px; border-top:1px dashed rgba(180,190,230,0.45); font-size:12.5px; color:var(--text-light); letter-spacing:.02em; }
+
+    /* ── LETTER TAB: GOLD & BLACK THEME ── */
+    #tab-letter {
+      position: relative;
+      isolation: isolate;
+    }
+    .emoji-tile-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      opacity: 0.5;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .emoji-tile-bg .row {
+      display: flex;
+      white-space: nowrap;
+      gap: 38px;
+      font-size: 26px;
+      margin-bottom: 30px;
+      animation: tileDrift 50s linear infinite;
+    }
+    .emoji-tile-bg .row span { opacity: 0.8; }
+    .emoji-tile-bg .row.r2 { animation-duration: 65s; animation-direction: reverse; margin-left: -60px; }
+    .emoji-tile-bg .row.r3 { animation-duration: 58s; margin-left: -20px; }
+    .emoji-tile-bg .row.r4 { animation-duration: 70s; animation-direction: reverse; margin-left: -90px; }
+    .emoji-tile-bg .row.r5 { animation-duration: 55s; margin-left: -45px; }
+    @keyframes tileDrift {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    #tab-letter .label-strip .dot {
+      background: #2b2b2b;
+    }
+    #tab-letter .label-strip span {
+      color: #6b5a00;
+    }
+    #tab-letter .card {
+      background: linear-gradient(160deg, #fff8df 0%, #fcecb0 55%, #fde9a0 100%);
+      box-shadow:
+        0 2px 0 0 #e0ad1f,
+        0 12px 40px rgba(60,50,0,0.2),
+        0 2px 8px rgba(40,35,0,0.12);
+      border: 1px solid rgba(150,110,0,0.12);
+    }
+    #tab-letter .card::before {
+      background-image: repeating-linear-gradient(
+        to bottom, transparent, transparent 31px, rgba(43,43,43,0.06) 32px
+      );
+    }
+    #tab-letter .torn-top {
+      background: linear-gradient(to right, #2b2b2b, #f4c842, #2b2b2b);
+      opacity: 0.85;
+      height: 6px;
+    }
+    #tab-letter .corner-fold {
+      background: linear-gradient(225deg, #fff8d6 50%, #f4c842 50%);
+      box-shadow: -2px 2px 6px rgba(40,35,0,0.18);
+    }
+    #tab-letter .motif {
+      opacity: 0.35;
+      filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1));
+    }
+    #tab-letter .date-line {
+      color: #8a7a1f;
+    }
+    #tab-letter .salutation {
+      color: #1a1a1a;
+    }
+    #tab-letter .body-text {
+      color: #2b2b2b;
+    }
+    #tab-letter .body-text em {
+      color: #a8860b;
+      font-style: italic;
+    }
+    #tab-letter .body-text strong {
+      color: #1a1a1a;
+      border-bottom: 1px solid #f4c842;
+      font-weight: 500;
+    }
+    #tab-letter .sign-off {
+      color: #8a7a1f;
+    }
+    #tab-letter .signature {
+      color: #1a1a1a;
+      font-weight: 400;
+    }
+
+    @media (max-width: 760px) {
+      .emoji-tile-bg { opacity: 0.32; }
+      .emoji-tile-bg .row { font-size: 20px; gap: 26px; margin-bottom: 22px; }
+    }
+
 
     /* ── CALENDAR TAB ── */
     .cal-header-strip {
@@ -417,6 +520,13 @@
        LETTER TAB
   ═══════════════════════════════════════════ -->
   <div class="page active" id="tab-letter">
+    <div class="emoji-tile-bg" aria-hidden="true">
+      <div class="row r1"><span>🐝</span><span>🌻</span><span>🍯</span><span>🌙</span><span>✨</span><span>🌼</span><span>🦋</span><span>🐝</span><span>🌻</span><span>🍯</span><span>🌙</span><span>✨</span><span>🌼</span><span>🦋</span><span>🐝</span><span>🌻</span><span>🍯</span><span>🌙</span><span>✨</span><span>🌼</span><span>🦋</span><span>🐝</span><span>🌻</span><span>🍯</span><span>🌙</span><span>✨</span><span>🌼</span><span>🦋</span></div>
+      <div class="row r2"><span>🌼</span><span>🦋</span><span>🐝</span><span>🌻</span><span>🍯</span><span>🌙</span><span>✨</span><span>🌼</span><span>🦋</span><span>🐝</span><span>🌻</span><span>🍯</span><span>🌙</span><span>✨</span><span>🌼</span><span>🦋</span><span>🐝</span><span>🌻</span><span>🍯</span><span>🌙</span><span>✨</span><span>🌼</span><span>🦋</span><span>🐝</span><span>🌻</span><span>🍯</span><span>🌙</span><span>✨</span></div>
+      <div class="row r3"><span>✨</span><span>🌼</span><span>🦋</span><span>🐝</span><span>🌻</span><span>🍯</span><span>🌙</span><span>✨</span><span>🌼</span><span>🦋</span><span>🐝</span><span>🌻</span><span>🍯</span><span>🌙</span><span>✨</span><span>🌼</span><span>🦋</span><span>🐝</span><span>🌻</span><span>🍯</span><span>🌙</span><span>✨</span><span>🌼</span><span>🦋</span><span>🐝</span><span>🌻</span><span>🍯</span><span>🌙</span></div>
+      <div class="row r4"><span>🍯</span><span>🌙</span><span>✨</span><span>🌼</span><span>🦋</span><span>🐝</span><span>🌻</span><span>🍯</span><span>🌙</span><span>✨</span><span>🌼</span><span>🦋</span><span>🐝</span><span>🌻</span><span>🍯</span><span>🌙</span><span>✨</span><span>🌼</span><span>🦋</span><span>🐝</span><span>🌻</span><span>🍯</span><span>🌙</span><span>✨</span><span>🌼</span><span>🦋</span><span>🐝</span><span>🌻</span></div>
+      <div class="row r5"><span>🌻</span><span>🍯</span><span>🌙</span><span>✨</span><span>🌼</span><span>🦋</span><span>🐝</span><span>🌻</span><span>🍯</span><span>🌙</span><span>✨</span><span>🌼</span><span>🦋</span><span>🐝</span><span>🌻</span><span>🍯</span><span>🌙</span><span>✨</span><span>🌼</span><span>🦋</span><span>🐝</span><span>🌻</span><span>🍯</span><span>🌙</span><span>✨</span><span>🌼</span><span>🦋</span><span>🐝</span></div>
+    </div>
     <div class="label-strip">
       <div class="dot"></div>
       <span>A letter, from me to you</span>
@@ -424,35 +534,21 @@
     <div class="card">
       <div class="torn-top"></div>
       <div class="corner-fold"></div>
-      <div class="motif">✈</div>
+      <div class="motif">🦋</div>
       <div class="date-line">written on a quiet night</div>
-      <div class="salutation">Hey —</div>
+      <div class="salutation">Hey Titli,</div>
       <div class="body-text">
-        <p>I know you don't want to talk with me, and <em>I kinda deserve that.</em></p>
-        <p>I didn't mean to hurt you — but my actions are never in sync with my intentions.
-          In retrospect, I shouldn't have bombarded you with those questions.
-          I was making you feel even more overwhelmed than you already were.</p>
-        <p>I know I messed it up. And I don't want any answers —
-          I'm not reaching out to talk about what happened.
-          <strong>Let the past be in the past.</strong> Forget about it.</p>
-        <p>I just want to talk to my best friend.
-          The person who knew me the best.
-          There is no one to blame for what happened — it was bound to happen.
-          But it will be both of our fault if this becomes permanent
-          and we stop talking altogether.</p>
-        <p>I made a huge mistake — falling in love with the person I could talk to about anything,
-          and ruining it all. I've accepted what happened.
-          I've made peace with the idea that we might never end up together.
-          <em>I just can't let a good friend walk.</em>
-          Please — there is too much happening, and I need to talk with you.</p>
+        <p>I know things ended in a way that left us not talking, and I understand if that's where you've decided to leave it.</p>
+        <p>I've thought a lot about what happened. Some things were just bound to happen the way they did.</p>
+        <p>What I do know is that I miss the friendship. You were someone I could talk to about anything, and that kind of person is rare. I don't think there's anyone to blame for how things turned out, but I'd rather not let something good disappear simply because neither of us reached out.</p>
+        <p>I've made peace with the idea that we won't end up together. <strong>That's alright.</strong> It doesn't take away from what the friendship meant.</p>
+        <p><em>This is where we've landed.</em> If you ever want to talk, I'm here. If not, I hope you know I wish you well, genuinely.</p>
       </div>
-      <div class="sign-off">always,</div>
-      <div class="signature">me</div>
-      <div class="postscript">
-        no expectations. no pressure. just — if you ever feel ready, I'm still here.
-      </div>
+      <div class="sign-off">Love always,</div>
+      <div class="signature">Keshav</div>
     </div>
   </div>
+
 
   <!-- ═══════════════════════════════════════════
        CALENDAR TAB
@@ -899,11 +995,14 @@ Anyways, I hope you are doing good, happy, healthy, and enjoying your life. I ho
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
       document.getElementById('tab-' + name).classList.add('active');
       btn.classList.add('active');
+      document.body.classList.toggle('theme-gold', name === 'letter');
       if (name === 'calendar') renderCalendar();
     }
 
     // init calendar
     renderCalendar();
+    // init theme (letter tab is active by default on load)
+    document.body.classList.add('theme-gold');
   </script>
 </body>
 </html>
