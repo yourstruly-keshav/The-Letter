@@ -424,6 +424,76 @@
       background: linear-gradient(135deg, #b7e4c7, #74c69d);
       color: #1b4332;
     }
+
+    /* ── RED MILESTONE ── */
+    .cal-day.milestone-red {
+      cursor: pointer;
+      background: linear-gradient(135deg, #ffd6d6, #ffaaaa);
+      color: #8b0000;
+      font-weight: 500;
+      box-shadow: 0 0 0 2px #e88080, 0 2px 12px rgba(200,60,60,0.28);
+      animation: milestoneGlowRed 2.5s ease-in-out infinite;
+      position: relative;
+    }
+    .cal-day.milestone-red::after { background: #c0392b; }
+    .cal-day.milestone-red:hover {
+      background: linear-gradient(135deg, #ffbaba, #ff8888);
+      transform: scale(1.13);
+    }
+    .cal-day.milestone-red .letter-decor-cal {
+      position: absolute;
+      top: -4px; right: -2px;
+      font-size: 10px;
+      line-height: 1;
+      pointer-events: none;
+    }
+    @keyframes milestoneGlowRed {
+      0%, 100% { box-shadow: 0 0 0 2px #e88080, 0 2px 12px rgba(200,60,60,0.28); }
+      50%       { box-shadow: 0 0 0 3px #c0392b, 0 4px 22px rgba(200,60,60,0.5); }
+    }
+    .note-card.milestone-red-card {
+      background: linear-gradient(160deg, #fff5f5 0%, #ffe8e8 60%, #fff0f0 100%);
+    }
+    .note-card.milestone-red-card .torn-top {
+      background: linear-gradient(to right, #e88080, #c0392b, #e88080);
+      opacity: 0.9;
+    }
+    .note-card.milestone-red-card .note-salutation,
+    .note-card.milestone-red-card .note-signature { color: #8b0000; }
+    .note-card.milestone-red-card .note-body { color: #3a1a1a; }
+    .note-card.milestone-red-card .note-body em { color: #c0392b; }
+    .note-card.milestone-red-card .note-date-tag,
+    .note-card.milestone-red-card .note-sign-off { color: #e88080; }
+    .milestone-badge.red-badge {
+      background: linear-gradient(135deg, #ffbaba, #e88080);
+      color: #8b0000;
+    }
+    .letter-emoji-crown {
+      text-align: center;
+      font-size: 22px;
+      letter-spacing: 4px;
+      margin-bottom: 16px;
+      line-height: 1;
+      user-select: none;
+    }
+    .music-player {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px dashed rgba(200,60,60,0.3);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .music-player iframe {
+      border-radius: 8px;
+      opacity: 0.85;
+    }
+    .music-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 13px;
+      color: #e88080;
+    }
     .flower-crown {
       text-align: center;
       font-size: 22px;
@@ -648,6 +718,49 @@ I found out that after the divorce of my parents, my dad had twins around a year
 I tried to do the reading project, but I just couldn't focus, so I ended up watching a movie, _Regretting You_. Mixed feelings about it, honestly, it was okayish, I guess.
 
 Anyways, I hope you are doing well and enjoying life. I wish I could talk with you; I need it. Take care of yourself, study well, and be happy with your life.`,
+        signOff: "Love always,",
+        signature: "Keshav"
+      },
+      "2026-5-18": {
+        salutation: "Hey Titli,",
+        milestone: "red",
+        milestoneLabel: "the truth, finally",
+        music: {
+          ytId: "6TAPqXkZW_I",
+          start: 102,
+          label: "betty — taylor swift"
+        },
+        body: `I am halfway through my vacation.
+
+I had so many plans. Before we separated, I had plans for things we would do, places we would go, and gifts I would give you. After we separated, I had plans for how I would meet you, discuss things, and somehow make it work. After you blocked me, I had plans for how I would study new things and improve myself.
+
+I haven't been able to do any of that.
+
+The only thing I came to know during all of this is that we have ₹4.5 lakhs of debt to pay off. I am done with everything. I have no will left.
+
+I am also done pretending that I am angry with you or that I hate you. I thought maybe if I focused on the negatives and stayed angry at you, I would move on more easily, but it isn't happening. I just hate myself for trying to hate you.
+
+Because maybe I can hate the girl who didn't care how my surgery went, but you weren't that girl. You were the girl who was so worried when I didn't have drinking water during the floods. You were the girl who wanted to somehow get across the city and bring water to me. You were the girl who cared so much that you couldn't sleep knowing I was in trouble.
+
+But somewhere along the way, _I turned you into the girl who didn't care about my surgery._
+
+I am sorry for everything I put you through.
+
+I thought that by pretending to be mature, you would start talking to me again. But I don't want to be mature anymore. I just want to be me.
+
+The problem is that I don't really know what "me" is anymore.
+
+I just know that I miss you.
+
+I want to do some huge romantic gesture, but I know that would probably only make you angry. I almost tried to call you yesterday, but I don't know what I would do if you picked up, and I don't know what I would do if I found out that I am still blocked.
+
+And I know that reading this might make you angry too, but I just need to write the truth down from now on. Well, most probably, you don't even read all this.
+
+So from now on, enough of _"I am doing good in life, and I hope you are doing good too."_
+
+More of:
+
+**"I am not doing good in life, and I hope you talk to me."**`,
         signOff: "Love always,",
         signature: "Keshav"
       },
@@ -923,6 +1036,12 @@ Anyways, I hope you are doing good, happy, healthy, and enjoying your life. I ho
             flower.className = 'flower-decor';
             flower.textContent = '🌸';
             div.appendChild(flower);
+          } else if (NOTES[key].milestone === 'red') {
+            div.classList.add('milestone-red');
+            const letter = document.createElement('span');
+            letter.className = 'letter-decor-cal';
+            letter.textContent = '💌';
+            div.appendChild(letter);
           } else if (NOTES[key].milestone) {
             div.classList.add('milestone');
           } else {
@@ -967,10 +1086,12 @@ Anyways, I hope you are doing good, happy, healthy, and enjoying your life. I ho
 
       const noteCard = document.querySelector('.note-card');
       const existingBadge = noteCard.querySelector('.milestone-badge');
-      const existingCrown = noteCard.querySelector('.flower-crown');
+      const existingCrown = noteCard.querySelector('.flower-crown, .letter-emoji-crown');
+      const existingPlayer = noteCard.querySelector('.music-player');
       if (existingBadge) existingBadge.remove();
       if (existingCrown) existingCrown.remove();
-      noteCard.classList.remove('milestone-card', 'milestone-green-card');
+      if (existingPlayer) existingPlayer.remove();
+      noteCard.classList.remove('milestone-card', 'milestone-green-card', 'milestone-red-card');
 
       if (note.milestone === 'green') {
         noteCard.classList.add('milestone-green-card');
@@ -982,6 +1103,16 @@ Anyways, I hope you are doing good, happy, healthy, and enjoying your life. I ho
         badge.className = 'milestone-badge green-badge';
         badge.textContent = '✦ ' + note.milestoneLabel;
         noteCard.querySelector('.note-date-tag').after(badge);
+      } else if (note.milestone === 'red') {
+        noteCard.classList.add('milestone-red-card');
+        const crown = document.createElement('div');
+        crown.className = 'letter-emoji-crown';
+        crown.textContent = '💌 ✉️ 💌 ✉️ 💌';
+        noteCard.querySelector('.note-date-tag').before(crown);
+        const badge = document.createElement('div');
+        badge.className = 'milestone-badge red-badge';
+        badge.textContent = '💌 ' + note.milestoneLabel;
+        noteCard.querySelector('.note-date-tag').after(badge);
       } else if (note.milestone) {
         noteCard.classList.add('milestone-card');
         const badge = document.createElement('div');
@@ -990,9 +1121,23 @@ Anyways, I hope you are doing good, happy, healthy, and enjoying your life. I ho
         noteCard.querySelector('.note-date-tag').after(badge);
       }
 
-      document.getElementById('note-body').innerHTML         = formatBody(note.body || '');
-      document.getElementById('note-sign-off').textContent   = note.signOff || 'always,';
-      document.getElementById('note-signature').textContent  = note.signature || 'me';
+      document.getElementById('note-body').innerHTML = formatBody(note.body || '');
+      document.getElementById('note-sign-off').textContent  = note.signOff || 'always,';
+      document.getElementById('note-signature').textContent = note.signature || 'me';
+
+      // music player
+      if (note.music) {
+        const player = document.createElement('div');
+        player.className = 'music-player';
+        player.innerHTML = `
+          <div>
+            <div class="music-label">🎵 playing — ${note.music.label}</div>
+            <iframe width="240" height="52" style="margin-top:8px;"
+              src="https://www.youtube.com/embed/${note.music.ytId}?start=${note.music.start}&autoplay=1&controls=1"
+              frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>`;
+        noteCard.appendChild(player);
+      }
 
       document.getElementById('note-overlay').classList.add('open');
       document.body.style.overflow = 'hidden';
