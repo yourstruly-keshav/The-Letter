@@ -1272,12 +1272,14 @@ Anyways, I hope you are doing good, happy, healthy, and enjoying your life. I ho
 
       const noteCard = document.querySelector('.note-card');
       const existingBadge = noteCard.querySelector('.milestone-badge');
-      const existingCrown = noteCard.querySelector('.flower-crown, .letter-emoji-crown');
+      const existingCrown = noteCard.querySelector('.flower-crown, .letter-emoji-crown, .video-emoji-crown');
       const existingPlayer = noteCard.querySelector('.music-player');
+      const existingVideo = noteCard.querySelector('.video-player-full');
       if (existingBadge) existingBadge.remove();
       if (existingCrown) existingCrown.remove();
       if (existingPlayer) existingPlayer.remove();
-      noteCard.classList.remove('milestone-card', 'milestone-green-card', 'milestone-red-card');
+      if (existingVideo) existingVideo.remove();
+      noteCard.classList.remove('milestone-card', 'milestone-green-card', 'milestone-red-card', 'milestone-turquoise-card');
 
       if (note.milestone === 'green') {
         noteCard.classList.add('milestone-green-card');
@@ -1362,7 +1364,10 @@ Anyways, I hope you are doing good, happy, healthy, and enjoying your life. I ho
       if (e.target === document.getElementById('note-overlay')) closeNoteBtn();
     }
     function closeNoteBtn() {
-      document.getElementById('note-overlay').classList.remove('open');
+      const overlay = document.getElementById('note-overlay');
+      // stop any playing media by resetting iframes
+      overlay.querySelectorAll('iframe').forEach(f => { f.src = f.src; });
+      overlay.classList.remove('open');
       document.body.style.overflow = '';
     }
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNoteBtn(); });
