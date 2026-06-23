@@ -464,6 +464,76 @@
     .note-card.milestone-red-card .note-body em { color: #c0392b; }
     .note-card.milestone-red-card .note-date-tag,
     .note-card.milestone-red-card .note-sign-off { color: #e88080; }
+
+    /* ── TURQUOISE MILESTONE ── */
+    .cal-day.milestone-turquoise {
+      cursor: pointer;
+      background: linear-gradient(135deg, #b2f0e8, #5ecec4);
+      color: #0a4040;
+      font-weight: 500;
+      box-shadow: 0 0 0 2px #2ebfb3, 0 2px 12px rgba(46,191,179,0.3);
+      animation: milestoneGlowTurquoise 2.5s ease-in-out infinite;
+      position: relative;
+    }
+    .cal-day.milestone-turquoise::after { background: #17a398; }
+    .cal-day.milestone-turquoise:hover {
+      background: linear-gradient(135deg, #8eeae0, #2ebfb3);
+      transform: scale(1.13);
+    }
+    .cal-day.milestone-turquoise .video-decor-cal {
+      position: absolute;
+      top: -4px; right: -2px;
+      font-size: 10px;
+      line-height: 1;
+      pointer-events: none;
+    }
+    @keyframes milestoneGlowTurquoise {
+      0%, 100% { box-shadow: 0 0 0 2px #2ebfb3, 0 2px 12px rgba(46,191,179,0.3); }
+      50%       { box-shadow: 0 0 0 3px #17a398, 0 4px 22px rgba(46,191,179,0.55); }
+    }
+    .note-card.milestone-turquoise-card {
+      background: linear-gradient(160deg, #f0fffe 0%, #d6f7f4 60%, #eafffe 100%);
+    }
+    .note-card.milestone-turquoise-card .torn-top {
+      background: linear-gradient(to right, #5ecec4, #17a398, #5ecec4);
+      opacity: 0.9;
+    }
+    .note-card.milestone-turquoise-card .note-salutation,
+    .note-card.milestone-turquoise-card .note-signature { color: #0a4040; }
+    .note-card.milestone-turquoise-card .note-body { color: #0d3535; }
+    .note-card.milestone-turquoise-card .note-body em { color: #17a398; }
+    .note-card.milestone-turquoise-card .note-date-tag,
+    .note-card.milestone-turquoise-card .note-sign-off { color: #2ebfb3; }
+    .milestone-badge.turquoise-badge {
+      background: linear-gradient(135deg, #b2f0e8, #2ebfb3);
+      color: #0a4040;
+    }
+    .video-emoji-crown {
+      text-align: center;
+      font-size: 22px;
+      letter-spacing: 4px;
+      margin-bottom: 16px;
+      line-height: 1;
+      user-select: none;
+    }
+    .video-player-full {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px dashed rgba(46,191,179,0.3);
+    }
+    .video-player-full iframe {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border-radius: 8px;
+      border: none;
+    }
+    .video-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 13px;
+      color: #2ebfb3;
+      margin-bottom: 10px;
+    }
     .milestone-badge.red-badge {
       background: linear-gradient(135deg, #ffbaba, #e88080);
       color: #8b0000;
@@ -718,6 +788,17 @@ I found out that after the divorce of my parents, my dad had twins around a year
 I tried to do the reading project, but I just couldn't focus, so I ended up watching a movie, _Regretting You_. Mixed feelings about it, honestly, it was okayish, I guess.
 
 Anyways, I hope you are doing well and enjoying life. I wish I could talk with you; I need it. Take care of yourself, study well, and be happy with your life.`,
+        signOff: "Love always,",
+        signature: "Keshav"
+      },
+      "2026-5-23": {
+        salutation: "Hey Titli,",
+        milestone: "turquoise",
+        milestoneLabel: "video entry",
+        video: {
+          ytId: "DXLEhIdrUHw"
+        },
+        body: `This was my try of a video entry,\nhope you don't mind.`,
         signOff: "Love always,",
         signature: "Keshav"
       },
@@ -1141,6 +1222,12 @@ Anyways, I hope you are doing good, happy, healthy, and enjoying your life. I ho
             letter.className = 'letter-decor-cal';
             letter.textContent = '💌';
             div.appendChild(letter);
+          } else if (NOTES[key].milestone === 'turquoise') {
+            div.classList.add('milestone-turquoise');
+            const vid = document.createElement('span');
+            vid.className = 'video-decor-cal';
+            vid.textContent = '🎥';
+            div.appendChild(vid);
           } else if (NOTES[key].milestone) {
             div.classList.add('milestone');
           } else {
@@ -1212,6 +1299,16 @@ Anyways, I hope you are doing good, happy, healthy, and enjoying your life. I ho
         badge.className = 'milestone-badge red-badge';
         badge.textContent = '💌 ' + note.milestoneLabel;
         noteCard.querySelector('.note-date-tag').after(badge);
+      } else if (note.milestone === 'turquoise') {
+        noteCard.classList.add('milestone-turquoise-card');
+        const crown = document.createElement('div');
+        crown.className = 'video-emoji-crown';
+        crown.textContent = '🎥 ✨ 🎬 ✨ 🎥';
+        noteCard.querySelector('.note-date-tag').before(crown);
+        const badge = document.createElement('div');
+        badge.className = 'milestone-badge turquoise-badge';
+        badge.textContent = '🎥 ' + note.milestoneLabel;
+        noteCard.querySelector('.note-date-tag').after(badge);
       } else if (note.milestone) {
         noteCard.classList.add('milestone-card');
         const badge = document.createElement('div');
@@ -1223,6 +1320,17 @@ Anyways, I hope you are doing good, happy, healthy, and enjoying your life. I ho
       document.getElementById('note-body').innerHTML = formatBody(note.body || '');
       document.getElementById('note-sign-off').textContent  = note.signOff || 'always,';
       document.getElementById('note-signature').textContent = note.signature || 'me';
+
+      // video player (full embed)
+      if (note.video) {
+        const vplayer = document.createElement('div');
+        vplayer.className = 'video-player-full';
+        vplayer.innerHTML = `
+          <div class="video-label">🎥 video entry</div>
+          <iframe src="https://www.youtube.com/embed/${note.video.ytId}?autoplay=1&rel=0"
+            allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+        noteCard.appendChild(vplayer);
+      }
 
       // music player
       if (note.music) {
