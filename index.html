@@ -791,6 +791,64 @@ Anyways, I hope you are doing well and enjoying life. I wish I could talk with y
         signOff: "Love always,",
         signature: "Keshav"
       },
+      "2026-6-5": {
+        salutation: "Hey Titli,",
+        body: `It's mid-afternoon on the 5th of July.
+
+Krishna hasn't talked to me for the past couple of days. I hope she is okay. Umm, as I said, I wanted to discuss with her what I should do, but since she is AWOL, I don't really know what I'll do. I guess it'll just be whatever my fever brain decides at this point. We'll see what happens lol.
+
+She had told me a few days ago that today Zeel and Tanisha were planning to give you a pre-birthday party, so I hope that went well and that you enjoyed it.
+
+I wish I could have been there to make it special too, but I guess you wouldn't have wanted that anyway.
+
+I'm thinking I'll email you tonight and wish you. I know I probably shouldn't contact you, but I promise I won't do it again until next year. I guess your birthday deserves an exception as it's the biggest festival of the year, after all.
+
+Anyways, I hope tomorrow is everything you've dreamed of. I hope it's special and that you get to spend it with people who are there for you and love you.
+
+Till then, seeyaa.`,
+        signOff: "Love always,",
+        signature: "Keshav"
+      },
+      "2026-6-4": {
+        salutation: "Hey Titli,",
+        body: `It's the 4th of July, the 250th birthday of America. But who cares, because in two days it's your 19th birthday, which is way more important. Honestly, they should just shift the holiday from the 4th to the 6th. Anyways, who can bring sense to the brains of American politicians, right?
+
+I hope you are doing well and are excited for the day after tomorrow.
+
+"How was Toy Story 5?" you ask.
+
+Well, it was very emotional, ngl. It made me cry like a baby, so overall it was definitely worth it. One line really stuck with me:
+
+_"You can't stop people from entering and leaving your life, but you can make the time you have with them special."_
+
+I guess that's what we had. Those 20 months were very special, however hard the last three days of them were.
+
+After the movie, we went to Crossword and bought some new books. Then I came home, and I've just been lying in bed because I suddenly got a fever lol. It came out of nowhere. Hopefully it'll be gone in a few hours.
+
+Till then, seeyaa.`,
+        signOff: "Love always,",
+        signature: "Keshav"
+      },
+      "2026-6-3": {
+        salutation: "Hey Titli,",
+        body: `It's the 3rd of July.
+
+The rain has been so nice. It's just like it was around your birthday last year lol. It was raining so much that day, and I was so scared I wouldn't be able to make it to your birthday party.
+
+Today I had something that reminded me of you lol, chorafali. You used to love it lol. It was really tasty. I hope you get to have some too.
+
+"What else did I do today?" you ask. Well, not much. Mostly worked on my research project and spent way too much time on Spotify, yk.
+
+And yes, it's the British Grand Prix weekend! Today was Practice 1 and Sprint Qualifying, and Hamilton topped both sessions, so overall it was a very good day. Hamilton is absolutely flying this year. It's so good to see him back in form.
+
+Also, we're going to watch _Toy Story 5_ in the theatre tomorrow. Lol, remember the last movie we watched together was _The Conjuring_? It felt more like a love story than a horror movie lol. And before that, I think it was _Shinchan_, if I remember correctly.
+
+So many happy memories, hehehe.
+
+Only three days to go until your special day. I hope you're as excited as I am, and I hope your birthday is everything you want it to be — amazing, joyful, and as festive as ever.`,
+        signOff: "Love always,",
+        signature: "Keshav"
+      },
       "2026-6-2": {
         salutation: "Hey Titli,",
         body: `2nd day of July, huh? I hope it's kind to you. Well... I guess it's not.
@@ -1316,16 +1374,22 @@ Anyways, I hope you are doing good, happy, healthy, and enjoying your life. I ho
     // ══════════════════════════════════════════
     // CALENDAR STATE — starts June 2026
     // ══════════════════════════════════════════
-    let currentYear  = 2026;
-    let currentMonth = 5; // 0-indexed: 5 = June
+    const MIN_YEAR  = 2026;
+    const MIN_MONTH = 5; // June 2026 — earliest month allowed
+
+    // Open to the current month by default, but never before June 2026
+    const _today = new Date();
+    let currentYear  = _today.getFullYear();
+    let currentMonth = _today.getMonth();
+    if (currentYear < MIN_YEAR || (currentYear === MIN_YEAR && currentMonth < MIN_MONTH)) {
+      currentYear  = MIN_YEAR;
+      currentMonth = MIN_MONTH;
+    }
 
     const MONTH_NAMES = [
       "January","February","March","April","May","June",
       "July","August","September","October","November","December"
     ];
-
-    const MIN_YEAR  = 2026;
-    const MIN_MONTH = 5; // June 2026 — earliest month allowed
 
     function renderCalendar() {
       const label = document.getElementById('cal-month-label');
