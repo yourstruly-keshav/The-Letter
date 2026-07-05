@@ -660,14 +660,14 @@
 
   <!-- NAV -->
   <nav class="nav">
-    <button class="nav-btn active" onclick="switchTab('letter',this)">✈ The Letter</button>
-    <button class="nav-btn"        onclick="switchTab('calendar',this)">◦ Calendar of Thought</button>
+    <button class="nav-btn" onclick="switchTab('letter',this)">✈ The Letter</button>
+    <button class="nav-btn active" onclick="switchTab('calendar',this)">◦ Calendar of Thought</button>
   </nav>
 
   <!-- ═══════════════════════════════════════════
        LETTER TAB
   ═══════════════════════════════════════════ -->
-  <div class="page active" id="tab-letter">
+  <div class="page" id="tab-letter">
     <div class="emoji-tile-bg" aria-hidden="true">
       <div class="row r1"><span>🐝</span><span>🌻</span><span>🍯</span><span>🌙</span><span>✨</span><span>🌼</span><span>🦋</span><span>🐝</span><span>🌻</span><span>🍯</span><span>🌙</span><span>✨</span><span>🌼</span><span>🦋</span><span>🐝</span><span>🌻</span><span>🍯</span><span>🌙</span><span>✨</span><span>🌼</span><span>🦋</span><span>🐝</span><span>🌻</span><span>🍯</span><span>🌙</span><span>✨</span><span>🌼</span><span>🦋</span></div>
       <div class="row r2"><span>🌼</span><span>🦋</span><span>🐝</span><span>🌻</span><span>🍯</span><span>🌙</span><span>✨</span><span>🌼</span><span>🦋</span><span>🐝</span><span>🌻</span><span>🍯</span><span>🌙</span><span>✨</span><span>🌼</span><span>🦋</span><span>🐝</span><span>🌻</span><span>🍯</span><span>🌙</span><span>✨</span><span>🌼</span><span>🦋</span><span>🐝</span><span>🌻</span><span>🍯</span><span>🌙</span><span>✨</span></div>
@@ -701,7 +701,7 @@
   <!-- ═══════════════════════════════════════════
        CALENDAR TAB
   ═══════════════════════════════════════════ -->
-  <div class="page" id="tab-calendar">
+  <div class="page active" id="tab-calendar">
     <div class="cal-header-strip">
       <div class="dot" style="width:8px;height:8px;border-radius:50%;background:var(--lavender-deep);"></div>
       <span>Days — little notes along the way</span>
@@ -1610,8 +1610,8 @@ Anyways, I hope you are doing good, happy, healthy, and enjoying your life. I ho
 
     // init calendar
     renderCalendar();
-    // init theme (letter tab is active by default on load)
-    document.body.classList.add('theme-gold');
+    // init theme (calendar tab is active by default on load — no gold theme)
+    document.body.classList.remove('theme-gold');
   </script>
 </body>
 </html>
