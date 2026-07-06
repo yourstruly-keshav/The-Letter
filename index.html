@@ -534,6 +534,218 @@
       color: #2ebfb3;
       margin-bottom: 10px;
     }
+
+    /* ── OCEAN BLUE MILESTONE (BIRTHDAY) ── */
+    .cal-day.milestone-ocean {
+      cursor: pointer;
+      background: linear-gradient(135deg, #a8dfff, #4aa8f0);
+      color: #06305c;
+      font-weight: 600;
+      box-shadow: 0 0 0 2px #1e88e5, 0 2px 14px rgba(30,136,229,0.35);
+      animation: milestoneGlowOcean 2.2s ease-in-out infinite;
+      position: relative;
+    }
+    .cal-day.milestone-ocean::after { background: #0d6efd; }
+    .cal-day.milestone-ocean:hover {
+      background: linear-gradient(135deg, #7fcaff, #1e88e5);
+      transform: scale(1.15);
+    }
+    .cal-day.milestone-ocean .bday-decor-cal {
+      position: absolute;
+      top: -5px; right: -3px;
+      font-size: 11px;
+      line-height: 1;
+      pointer-events: none;
+    }
+    @keyframes milestoneGlowOcean {
+      0%, 100% { box-shadow: 0 0 0 2px #1e88e5, 0 2px 14px rgba(30,136,229,0.35); }
+      50%       { box-shadow: 0 0 0 4px #0d6efd, 0 4px 26px rgba(30,136,229,0.6); }
+    }
+    .note-card.milestone-ocean-card {
+      background: linear-gradient(165deg, #eaf7ff 0%, #cdeeff 45%, #e8f9ff 100%);
+    }
+    .note-card.milestone-ocean-card .torn-top {
+      background: linear-gradient(to right, #4aa8f0, #0d6efd, #4aa8f0);
+      opacity: 0.9;
+      height: 7px;
+    }
+    .note-card.milestone-ocean-card .note-salutation,
+    .note-card.milestone-ocean-card .note-signature { color: #06305c; }
+    .note-card.milestone-ocean-card .note-body { color: #0b3a63; }
+    .note-card.milestone-ocean-card .note-body em { color: #1e88e5; }
+    .note-card.milestone-ocean-card .note-date-tag,
+    .note-card.milestone-ocean-card .note-sign-off { color: #2596f0; }
+    .milestone-badge.ocean-badge {
+      background: linear-gradient(135deg, #a8dfff, #1e88e5);
+      color: #06305c;
+    }
+    .bday-crown {
+      text-align: center;
+      font-size: 24px;
+      letter-spacing: 5px;
+      margin-bottom: 16px;
+      line-height: 1;
+      user-select: none;
+    }
+
+    /* ── ENVELOPE INTERACTION ── */
+    .envelope-wrap {
+      margin: 32px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .envelope-hint {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 13.5px;
+      color: #2596f0;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+    .envelope {
+      position: relative;
+      width: 220px;
+      height: 145px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .envelope:hover { transform: translateY(-3px) scale(1.02); }
+    .envelope-body {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, #fdf6e8, #f0e2c0);
+      border: 1px solid rgba(150,110,40,0.25);
+      border-radius: 4px;
+      box-shadow: 0 8px 24px rgba(20,60,100,0.18);
+    }
+    .envelope-flap {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 0;
+      border-left: 110px solid transparent;
+      border-right: 110px solid transparent;
+      border-top: 78px solid #e8d5a3;
+      transform-origin: top;
+      transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+      z-index: 3;
+      filter: drop-shadow(0 2px 3px rgba(20,60,100,0.15));
+    }
+    .envelope.open .envelope-flap {
+      transform: rotateX(180deg);
+      z-index: 1;
+    }
+    .envelope-seal {
+      position: absolute;
+      top: 52px; left: 50%;
+      transform: translateX(-50%);
+      width: 34px; height: 34px;
+      background: radial-gradient(circle at 35% 30%, #e8607a, #a02040);
+      border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      z-index: 4;
+      transition: opacity 0.3s ease;
+    }
+    .envelope.open .envelope-seal { opacity: 0; pointer-events: none; }
+    .envelope-label {
+      position: absolute;
+      bottom: 14px; left: 0; right: 0;
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 13px;
+      color: #8a6a2a;
+      z-index: 2;
+    }
+
+    .victorian-letter-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(20,20,10,0.55);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      align-items: center; justify-content: center;
+      padding: 24px 16px;
+    }
+    .victorian-letter-overlay.open {
+      display: flex;
+      animation: fadein 0.3s ease;
+    }
+    .victorian-letter-inner {
+      max-width: 560px;
+      width: 100%;
+      max-height: 88vh;
+      overflow-y: auto;
+      animation: unfold 0.5s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    .victorian-paper {
+      position: relative;
+      background:
+        radial-gradient(ellipse at 15% 10%, rgba(160,120,60,0.15) 0%, transparent 35%),
+        radial-gradient(ellipse at 85% 90%, rgba(160,120,60,0.18) 0%, transparent 40%),
+        radial-gradient(ellipse at 90% 15%, rgba(140,100,50,0.12) 0%, transparent 30%),
+        linear-gradient(160deg, #f4e8ce 0%, #ede0c0 50%, #f0e4cc 100%);
+      border: 1px solid rgba(120,90,40,0.3);
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.4),
+        inset 0 0 60px rgba(140,100,50,0.15);
+      padding: 50px 44px 40px;
+    }
+    .victorian-paper::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(120,90,40,0.02) 3px),
+        repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(120,90,40,0.02) 3px);
+      pointer-events: none;
+    }
+    .victorian-close {
+      position: absolute;
+      top: 10px; right: 14px;
+      background: none; border: none; cursor: pointer;
+      font-size: 22px;
+      color: rgba(90,60,20,0.5);
+      z-index: 5;
+      transition: color 0.2s;
+    }
+    .victorian-close:hover { color: rgba(90,60,20,0.9); }
+    .victorian-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 600;
+      font-size: 26px;
+      color: #4a3418;
+      text-align: center;
+      margin-bottom: 26px;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.3);
+    }
+    .victorian-body {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 19px;
+      font-weight: 500;
+      line-height: 2.05;
+      color: #4a3418;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.25);
+    }
+    .victorian-body p { margin-bottom: 20px; }
+    .victorian-flourish {
+      text-align: center;
+      font-size: 20px;
+      color: rgba(120,90,40,0.5);
+      margin: 20px 0;
+      letter-spacing: 8px;
+    }
+    @media (max-width: 600px) {
+      .victorian-paper { padding: 36px 24px 30px; }
+      .victorian-body { font-size: 17px; }
+      .victorian-heading { font-size: 22px; }
+      .envelope { width: 180px; height: 120px; }
+      .envelope-flap { border-left-width: 90px; border-right-width: 90px; border-top-width: 64px; }
+    }
     .milestone-badge.red-badge {
       background: linear-gradient(135deg, #ffbaba, #e88080);
       color: #8b0000;
@@ -704,7 +916,7 @@
   <div class="page active" id="tab-calendar">
     <div class="cal-header-strip">
       <div class="dot" style="width:8px;height:8px;border-radius:50%;background:var(--lavender-deep);"></div>
-      <span>Starts from June, click on each day for a little note to you! :)</span>
+      <span>Days — little notes along the way</span>
     </div>
 
     <div class="cal-card">
@@ -739,6 +951,29 @@
         <div class="note-body" id="note-body"></div>
         <div class="note-sign-off" id="note-sign-off"></div>
         <div class="note-signature" id="note-signature"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       VICTORIAN LETTER OVERLAY (envelope reveal)
+  ═══════════════════════════════════════════ -->
+  <div class="victorian-letter-overlay" id="victorian-overlay" onclick="closeVictorian(event)">
+    <div class="victorian-letter-inner">
+      <div class="victorian-paper">
+        <button class="victorian-close" onclick="closeVictorianBtn()">×</button>
+        <div class="victorian-flourish">❦ ❦ ❦</div>
+        <div class="victorian-heading">Happy Birthday, Diya.</div>
+        <div class="victorian-body">
+          <p>I hope you don't mind me thinking so much about you on your birthday. It's just that your birthday feels like a special day for me too. I don't know why, it just does.</p>
+          <p>I want you to feel special on your birthday and be excited about it like you used to. It's not just a birthday, it's <em>the</em> birthday.</p>
+          <p>I know things might be tough right now, but they'll be alright, and I hope today still feels special.</p>
+          <p>So, umm... this is something I do sometimes, and maybe it'll help.</p>
+          <p>Just close your eyes and hug yourself or a pillow, like old times, and imagine the biggest birthday celebration you can. Imagine lots and lots of gifts, decorations, bouquets, cakes, and all your favourite food. Imagine yourself in a lovely dress, smiling.</p>
+          <p>And imagine that everyone you want there, whether they're real, far away, or only in your imagination, is standing around you. You can feel their presence in your heart, all wishing you a very happy birthday.</p>
+          <p>Happy Birthday once again.</p>
+        </div>
+        <div class="victorian-flourish">❦ ❦ ❦</div>
       </div>
     </div>
   </div>
@@ -788,6 +1023,38 @@ I found out that after the divorce of my parents, my dad had twins around a year
 I tried to do the reading project, but I just couldn't focus, so I ended up watching a movie, _Regretting You_. Mixed feelings about it, honestly, it was okayish, I guess.
 
 Anyways, I hope you are doing well and enjoying life. I wish I could talk with you; I need it. Take care of yourself, study well, and be happy with your life.`,
+        signOff: "Love always,",
+        signature: "Keshav"
+      },
+      "2026-6-6": {
+        salutation: "Hey Titli,",
+        milestone: "ocean",
+        milestoneLabel: "happy birthday 🎂",
+        envelope: true,
+        body: `It's finally, finally the 6th of July.
+
+Happy Birthday, dear.
+
+I hope the world around you shines back the same light that you bring into it.
+
+This is an additional note for you.`,
+        bodyAfter: `A couple of other things...
+
+Generally, I write these entries late at night or early the next day, and sometimes it takes me a few days to post them here, so it's all a bit unorganised.
+
+I met Tejas yesterday after almost a year. It felt really good talking to him and his mom.
+
+Then I talked to Krishna at night and showed her what I was planning to send you and everything. She told me how no one could come at 12, how the pre-party got cancelled, and about your practical exams. So yeah, I decided to order that Walnut Fudge Brownie for you.
+
+Hope you enjoyed it, birthday girl.
+
+I also sent the mail early by mistake lol, but it is what it is. I had decided that I would only send it to you if a non-Mercedes driver won the race, which had happened only once this season. And well... Leclerc won in the Ferrari, so I took it as a sign.
+
+Anyways, happy birthday once again.
+
+Even when today ends, I hope the celebrations don't.
+
+_Keep fighting, birthday star._`,
         signOff: "Love always,",
         signature: "Keshav"
       },
@@ -1452,6 +1719,12 @@ Anyways, I hope you are doing good, happy, healthy, and enjoying your life. I ho
             vid.className = 'video-decor-cal';
             vid.textContent = '🎥';
             div.appendChild(vid);
+          } else if (NOTES[key].milestone === 'ocean') {
+            div.classList.add('milestone-ocean');
+            const bday = document.createElement('span');
+            bday.className = 'bday-decor-cal';
+            bday.textContent = '🎂';
+            div.appendChild(bday);
           } else if (NOTES[key].milestone) {
             div.classList.add('milestone');
           } else {
@@ -1503,7 +1776,11 @@ Anyways, I hope you are doing good, happy, healthy, and enjoying your life. I ho
       if (existingCrown) existingCrown.remove();
       if (existingPlayer) existingPlayer.remove();
       if (existingVideo) existingVideo.remove();
-      noteCard.classList.remove('milestone-card', 'milestone-green-card', 'milestone-red-card', 'milestone-turquoise-card');
+      const existingEnvelope = noteCard.querySelector('.envelope-wrap');
+      const existingBodyAfter = noteCard.querySelector('.note-body-after');
+      if (existingEnvelope) existingEnvelope.remove();
+      if (existingBodyAfter) existingBodyAfter.remove();
+      noteCard.classList.remove('milestone-card', 'milestone-green-card', 'milestone-red-card', 'milestone-turquoise-card', 'milestone-ocean-card');
 
       if (note.milestone === 'green') {
         noteCard.classList.add('milestone-green-card');
@@ -1535,6 +1812,16 @@ Anyways, I hope you are doing good, happy, healthy, and enjoying your life. I ho
         badge.className = 'milestone-badge turquoise-badge';
         badge.textContent = '🎥 ' + note.milestoneLabel;
         noteCard.querySelector('.note-date-tag').after(badge);
+      } else if (note.milestone === 'ocean') {
+        noteCard.classList.add('milestone-ocean-card');
+        const crown = document.createElement('div');
+        crown.className = 'bday-crown';
+        crown.textContent = '🎂 🎈 🎉 🎈 🎂';
+        noteCard.querySelector('.note-date-tag').before(crown);
+        const badge = document.createElement('div');
+        badge.className = 'milestone-badge ocean-badge';
+        badge.textContent = '🎂 ' + note.milestoneLabel;
+        noteCard.querySelector('.note-date-tag').after(badge);
       } else if (note.milestone) {
         noteCard.classList.add('milestone-card');
         const badge = document.createElement('div');
@@ -1546,6 +1833,28 @@ Anyways, I hope you are doing good, happy, healthy, and enjoying your life. I ho
       document.getElementById('note-body').innerHTML = formatBody(note.body || '');
       document.getElementById('note-sign-off').textContent  = note.signOff || 'always,';
       document.getElementById('note-signature').textContent = note.signature || 'me';
+
+      // envelope embed (inserted after the body text, before sign-off)
+      if (note.envelope) {
+        const wrap = document.createElement('div');
+        wrap.className = 'envelope-wrap';
+        wrap.innerHTML = `
+          <div class="envelope-hint">tap to open</div>
+          <div class="envelope" onclick="toggleEnvelope(this)">
+            <div class="envelope-body"></div>
+            <div class="envelope-seal">❦</div>
+            <div class="envelope-flap"></div>
+            <div class="envelope-label">a little something more</div>
+          </div>`;
+        document.getElementById('note-body').after(wrap);
+
+        if (note.bodyAfter) {
+          const afterDiv = document.createElement('div');
+          afterDiv.className = 'note-body note-body-after';
+          afterDiv.innerHTML = formatBody(note.bodyAfter);
+          wrap.after(afterDiv);
+        }
+      }
 
       // video player (full embed)
       if (note.video) {
@@ -1595,6 +1904,25 @@ Anyways, I hope you are doing good, happy, healthy, and enjoying your life. I ho
       document.body.style.overflow = '';
     }
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNoteBtn(); });
+
+    // ══════════════════════════════════════════
+    // ENVELOPE + VICTORIAN LETTER
+    // ══════════════════════════════════════════
+    function toggleEnvelope(el) {
+      el.classList.add('open');
+      setTimeout(() => {
+        document.getElementById('victorian-overlay').classList.add('open');
+      }, 450);
+    }
+    function closeVictorian(e) {
+      if (e.target === document.getElementById('victorian-overlay')) closeVictorianBtn();
+    }
+    function closeVictorianBtn() {
+      document.getElementById('victorian-overlay').classList.remove('open');
+    }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeVictorianBtn();
+    });
 
     // ══════════════════════════════════════════
     // TAB SWITCHING
